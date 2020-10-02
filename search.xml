@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Weather routing</title>
+    <url>/2020/10/03/Weather-routing/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">You can contact me for a password</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="50ed35313d1b1e841a9e67d64591ec192e723333a04653b06187ea207337a7c3">28d0995654ef65e4ddfbf4897c8bfd2e</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>学术</category>
+      </categories>
+      <tags>
+        <tag>Science</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode 118.杨辉三角</title>
     <url>/2020/09/06/LeetCode118/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
