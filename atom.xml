@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>ShiningXy</title>
+  <title>ShiningXY</title>
   
-  
+  <subtitle>Just Study</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>ShiningXy</name>
+    <name>ShiningXY</name>
     
   </author>
   
