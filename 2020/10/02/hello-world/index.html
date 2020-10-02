@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://shiningxy.gitee.io/shiningxy.github.io">
-  <title>LeetCode 118.杨辉三角 | ShiningXy</title>
+  <title>Hello World | ShiningXy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="刷题笔记">
+  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 118.杨辉三角">
-<meta property="og:url" content="http://shiningxy.gitee.io/shiningxy.github.io/2020/09/06/LeetCode118/index.html">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://shiningxy.gitee.io/shiningxy.github.io/2020/10/02/hello-world/index.html">
 <meta property="og:site_name" content="ShiningXy">
-<meta property="og:description" content="刷题笔记">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s1.ax1x.com/2020/09/06/wmJfmt.gif">
-<meta property="article:published_time" content="2020-09-06T13:48:21.000Z">
-<meta property="article:modified_time" content="2020-09-25T07:17:27.181Z">
+<meta property="article:published_time" content="2020-10-02T08:31:54.084Z">
+<meta property="article:modified_time" content="2020-08-13T01:12:23.839Z">
 <meta property="article:author" content="ShiningXy">
-<meta property="article:tag" content="数组">
+<meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s1.ax1x.com/2020/09/06/wmJfmt.gif">
   
     <link rel="alternative" href="/atom.xml" title="ShiningXy" type="application/atom+xml">
   
@@ -186,14 +184,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-LeetCode118" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      LeetCode 118.杨辉三角
+      Hello World
     </h1>
   
 
@@ -209,68 +207,23 @@
 
 <!--显示阅读次数完毕-->
         
-        <a href="/shiningxy.github.io/2020/09/06/LeetCode118/" class="archive-article-date">
-  	<time datetime="2020-09-06T13:48:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-06</time>
+        <a href="/shiningxy.github.io/2020/10/02/hello-world/" class="archive-article-date">
+  	<time datetime="2020-10-02T08:31:54.084Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>刷题笔记<br><a id="more"></a></p>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
-<p><img src="https://s1.ax1x.com/2020/09/06/wmJfmt.gif" alt="wmJfmt.gif"></p>
-<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
-<p>示例:</p>
-<p>输入: 5</p>
-<p>输出:<br>[\<br>&emsp;&emsp;&ensp;[1],\<br>&emsp;&emsp;[1,1],\<br>&emsp;&ensp;[1,2,1],\<br>&emsp;[1,3,3,1],\<br>&ensp;[1,4,6,4,1]\<br>]</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/pascals-triangle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/pascals-triangle</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><pre><code>class Solution{
-  public List&lt;List&lt;Integer&gt;&gt; generate(int numRows){
-    List&lt;List&lt;Integer&gt;&gt; triangle = new ArrayList&lt;List&lt;Integer&gt;&gt;();
-
-    //First base case; if user zero rows, they get zero rows.
-    if(numRows == 0) {
-      return triangle;
-    }
-
-    //Second base case; first row is always [1].
-    triangle.add(new ArrayList&lt;&gt;());
-    triangle.get(0).add(1);
-
-    for (int rowNum = 1; rowNum &lt; numRows; rowNum++){
-      List&lt;Integer&gt; row = new ArrayList&lt;&gt;();
-      List&lt;Integer&gt; prevRow = triangle.get(rowNum-1);
-
-      //The first row element is always 1.
-      row.add(1);
-
-      // Each triangle element (other than the first and last of each row)
-      // is equal to the sum of the elements above-and-to-the-left and
-      // above-and-to-the-right.
-      for(int j=1;j&lt;rowNum;j++){
-        row.add(prevRow.get(j-1) + prevRow.get(j));
-      }
-
-      //The last row element is always 1.
-      row.add(1);
-
-      triangle.add(row);
-
-    }
-
-    return triangle;
-  }
-}
-</code></pre><h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><ul>
-<li>时间复杂度：$O(numRows^2)O(numRows 2)$</li>
-</ul>
-<p>虽然更新<code>triangle</code>中的每个值都是在常量时间内发生的，但它会被执行$O(numRows^2)O(numRows^2)$次。</p>
-<p>想要了解原因，就需要考虑总共有多少次循环迭代。很明显外层循环需要运行$numRows$次,但在外层循环的每次迭代中，内层循环要运行$rowNum$次。</p>
-<p>因此，<code>triangle</code>发生的更新总数为$1 + 2 + 3 + \ldots + numRows1+2+3+…+numRows$，根据高斯公式有</p>
-<script type="math/tex; mode=display">
-\frac{numsRows(numRows+1)}{2}= \frac{numsRows^2+numRows}{2}=\frac{numsRows^2}{2}+\frac{numRows}{2}=O(numRows^2)</script><p>空间复杂度：$O(numRows^2)O(numRows^2)$</p>
-<p>因为我们需要存储我们在<code>triangle</code>中更新的每个数字，所以空间需求与时间复杂度相同。</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
 <!-- 增加版权声明 -->
@@ -284,7 +237,7 @@
   
   <br>
   <strong>本文链接：</strong>
-  <a rel="license" href="http://shiningxy.gitee.io/shiningxy.github.io/2020/09/06/LeetCode118/">http://shiningxy.gitee.io/shiningxy.github.io/2020/09/06/LeetCode118/</a>
+  <a rel="license" href="http://shiningxy.gitee.io/shiningxy.github.io/2020/10/02/hello-world/">http://shiningxy.gitee.io/shiningxy.github.io/2020/10/02/hello-world/</a>
   <br>
   <strong>版权声明：</strong>
   本作品采用
@@ -340,24 +293,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/shiningxy.github.io/categories/刷题笔记//" class="article-tag-list-link color5">刷题笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -407,7 +349,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://shiningxy.gitee.io/shiningxy.github.io/2020/09/06/LeetCode118/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://shiningxy.gitee.io/shiningxy.github.io/2020/10/02/hello-world/" alt="微信分享二维码">
       </div>
 </div>
 
@@ -421,18 +363,9 @@
   
 <nav id="article-nav">
   
-    <a href="/shiningxy.github.io/2020/10/02/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
   
-  
-    <a href="/shiningxy.github.io/2020/09/06/Leetcode88/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">LeetCode 88.合并两个有序数组</div>
+    <a href="/shiningxy.github.io/2020/09/06/LeetCode118/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode 118.杨辉三角</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -459,7 +392,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题解"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#动态规划"><span class="toc-number">2.1.</span> <span class="toc-text">动态规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析"><span class="toc-number">2.2.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
