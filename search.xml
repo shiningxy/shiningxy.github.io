@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>LeetCode 118.杨辉三角</title>
+    <url>/2020/09/06/LeetCode118/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
+<a id="more"></a>
+<p><img src="https://s1.ax1x.com/2020/09/06/wmJfmt.gif" alt="wmJfmt.gif"></p>
+<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
+<p>示例:</p>
+<p>输入: 5</p>
+<p>输出:<br>[\<br>&emsp;&emsp;&ensp;[1],\<br>&emsp;&emsp;[1,1],\<br>&emsp;&ensp;[1,2,1],\<br>&emsp;[1,3,3,1],\<br>&ensp;[1,4,6,4,1]\<br>]</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/pascals-triangle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/pascals-triangle</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><pre><code>class Solution{
+  public List&lt;List&lt;Integer&gt;&gt; generate(int numRows){
+    List&lt;List&lt;Integer&gt;&gt; triangle = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+
+    //First base case; if user zero rows, they get zero rows.
+    if(numRows == 0) {
+      return triangle;
+    }
+
+    //Second base case; first row is always [1].
+    triangle.add(new ArrayList&lt;&gt;());
+    triangle.get(0).add(1);
+
+    for (int rowNum = 1; rowNum &lt; numRows; rowNum++){
+      List&lt;Integer&gt; row = new ArrayList&lt;&gt;();
+      List&lt;Integer&gt; prevRow = triangle.get(rowNum-1);
+
+      //The first row element is always 1.
+      row.add(1);
+
+      // Each triangle element (other than the first and last of each row)
+      // is equal to the sum of the elements above-and-to-the-left and
+      // above-and-to-the-right.
+      for(int j=1;j&lt;rowNum;j++){
+        row.add(prevRow.get(j-1) + prevRow.get(j));
+      }
+
+      //The last row element is always 1.
+      row.add(1);
+
+      triangle.add(row);
+
+    }
+
+    return triangle;
+  }
+}
+</code></pre><h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><ul>
+<li>时间复杂度：$O(numRows^2)O(numRows 2)$</li>
+</ul>
+<p>虽然更新<code>triangle</code>中的每个值都是在常量时间内发生的，但它会被执行$O(numRows^2)O(numRows^2)$次。</p>
+<p>想要了解原因，就需要考虑总共有多少次循环迭代。很明显外层循环需要运行$numRows$次,但在外层循环的每次迭代中，内层循环要运行$rowNum$次。</p>
+<p>因此，<code>triangle</code>发生的更新总数为$1 + 2 + 3 + \ldots + numRows1+2+3+…+numRows$，根据高斯公式有</p>
+<script type="math/tex; mode=display">
+\frac{numsRows(numRows+1)}{2}= \frac{numsRows^2+numRows}{2}=\frac{numsRows^2}{2}+\frac{numRows}{2}=O(numRows^2)</script><p>空间复杂度：$O(numRows^2)O(numRows^2)$</p>
+<p>因为我们需要存储我们在<code>triangle</code>中更新的每个数字，所以空间需求与时间复杂度相同。</p>
+]]></content>
+      <categories>
+        <category>刷题笔记</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode 88.合并两个有序数组</title>
+    <url>/2020/09/06/Leetcode88/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。</p>
+<a id="more"></a>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。<br>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>输入:<br>nums1 = [1,2,3,0,0,0], m = 3<br>nums2 = [2,5,6],       n = 3</p>
+<p>输出: [1,2,2,3,5,6]</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/merge-sorted-array" target="_blank" rel="noopener">https://leetcode-cn.com/problems/merge-sorted-array</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="0x01-合并后排序"><a href="#0x01-合并后排序" class="headerlink" title="0x01 合并后排序"></a>0x01 合并后排序</h2><h3 id="直觉"><a href="#直觉" class="headerlink" title="直觉"></a>直觉</h3><p>最朴素的解法就是将两个数组合并之后再排序。该算法只需要一行（Java是2行），时间复杂度较差，为$O((n+m)log(n+m))$。这是由于这种方法没有利用两个数组本身已经有序这一点。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><pre><code>class Solution {
+  public void merge(int[] nums1, int m, int[] nums, int n){
+    System.arraycopy(nums2, 0, nums1, m, n);
+    Arrays.sort(nums1);
+  }
+}
+</code></pre><h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：$O((n+m)log(n+m))$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<h2 id="0x02-双指针-从前往后"><a href="#0x02-双指针-从前往后" class="headerlink" title="0x02 双指针/从前往后"></a>0x02 双指针/从前往后</h2><h3 id="直觉-1"><a href="#直觉-1" class="headerlink" title="直觉"></a>直觉</h3><p>一般而言，对于有序数组可以通过 <em>双指针法</em> 达到$O(n+m)$的时间复杂度。</p>
+<p>最直接的算法实现是将指针<code>p1</code>置为<code>nums1</code>的开头，<code>p2</code>为<code>nums2</code>的开头，在每一步将最小值放入输出数组中。</p>
+<p>由于<code>nums1</code>是用于输出的数组，需要将<code>nums1</code>中的前<code>m</code>个元素放在其他地方，也就需要$O(m)$的空间复杂度。</p>
+<p><img src="https://s1.ax1x.com/2020/09/06/wZMyvT.png" alt="wZMyvT.png"></p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><pre><code>class Solution{
+  public void merge(int[] nums1, int m, int[] nums2, int n){
+    // Make a copy of nums1
+    int [] nums1_copy = new int[m];
+    System.arraycopy(nums1, 0, nums1_copy, 0, m);
+
+    // Two get pointers for nums1_copy and nums2.
+    int p1=0;
+    int p2=0;
+
+    // Set pointer for nums1
+    int p=0;
+
+    // Compare elements from nums1_copy and nums2
+    // and add the smallest one into nums1.
+    while((p1&lt;m)&amp;&amp;(p2&lt;n))
+      nums1[p++] = (nums1_copy[p1] &lt; nums2[p2]) ? nums1_copy[p1++] : nums2[p2++];
+
+    // if there are still elements to add
+    if (p1 &lt; m)
+      System.arraycopy(nums1_copy, p1, nums1, p1 + p2, m + n - p1 - p2);
+    if (p2 &lt; m)
+      System.arraycopy(nums2, p2, nums1, p1 + p2, m + n - p1 - p2);
+  }
+}
+</code></pre><h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：$O(n+m)$</li>
+<li>空间复杂度：$O(m)$</li>
+</ul>
+<h2 id="0x03-双指针-从后向前"><a href="#0x03-双指针-从后向前" class="headerlink" title="0x03 双指针/从后向前 "></a><font color="#FF0000">0x03 双指针/从后向前 </font></h2><h3 id="直觉-2"><a href="#直觉-2" class="headerlink" title="直觉"></a>直觉</h3><p>方法0x02已经取得了最优的时间复杂度$O(n+m)$，但需要使用额外空间。这是由于从头改变<code>nums1</code>的值时，需要把<code>nums1</code>中的元素存放在其他位置</p>
+<blockquote>
+<p>如果我们从结尾开始改写<code>nums1</code>的值又会如何呢？这里没有信息，因此不需要额外空间。</p>
+</blockquote>
+<p>这里的指针<code>p</code>用于追踪添加元素的位置。</p>
+<p><img src="https://s1.ax1x.com/2020/09/06/wZlwpq.png" alt="wZlwpq.png"><br><img src="https://s1.ax1x.com/2020/09/06/wZlY7Q.png" alt="wZlY7Q.png"><br><img src="https://s1.ax1x.com/2020/09/06/wZlNkj.png" alt="wZlNkj.png"><br><img src="https://s1.ax1x.com/2020/09/06/wZlUts.png" alt="wZlUts.png"><br><img src="https://s1.ax1x.com/2020/09/06/wZlahn.png" alt="wZlahn.png"><br><img src="https://s1.ax1x.com/2020/09/06/wZl010.png" alt="wZl010.png"></p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><pre><code>class Solution {
+  public void merge(int[] nums1, int m, int[] nums2, int n) {
+    // two get pointers for nums1 and nums2
+    int p1 = m - 1;
+    int p2 = n - 1;
+    // set pointer for nums1
+    int p = m + n - 1;
+
+    // while there are still elements to compare
+    while ((p1 &gt;= 0) &amp;&amp; (p2 &gt;= 0))
+    // compare two elements from nums1 and nums2 
+    // and add the largest one in nums1 
+    nums1[p--] = (nums1[p1] &lt; nums2[p2]) ? nums2[p2--] : nums1[p1--];
+
+    // add missing elements from nums2
+    System.arraycopy(nums2, 0, nums1, 0, p2 + 1);
+  }
+}
+</code></pre><h3 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：$O(n+m)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>刷题笔记</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>支持向量机（非线性模型）</title>
+    <url>/2020/08/30/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%89/</url>
+    <content><![CDATA[<p>浙江大学机器学习课程笔记归纳<br><a id="more"></a></p>
+<h1 id="课程回顾"><a href="#课程回顾" class="headerlink" title="课程回顾"></a>课程回顾</h1><p>SVM是最大化间隔(Margin)的分类算法</p>
+<p>优化问题：训练样本</p>
+<script type="math/tex; mode=display">
+\left \{ \left ( x_i,y_i \right) \right \} _ {i=1 \sim N}</script><p>最小化：</p>
+<script type="math/tex; mode=display">
+\frac{1}{2}\left \| \omega \right \|^2</script><p>限制条件：</p>
+<script type="math/tex; mode=display">
+y_i[\omega^Tx_i+b]\ge1(i=1 \sim n)</script><blockquote>
+<p>如果上述训练样本线性可分，则一定可以做出一条线将他们分开。同时最小值一定有解。</p>
+<p>如果不是线性可分，则最小值一定无解</p>
+<p>非线性模型则改变最优化的问题，使它在非线性的情况下也有最优解</p>
+</blockquote>
+<h1 id="SVM处理非线性"><a href="#SVM处理非线性" class="headerlink" title="SVM处理非线性"></a>SVM处理非线性</h1><h2 id="最小化："><a href="#最小化：" class="headerlink" title="最小化："></a><strong>最小化：</strong></h2><script type="math/tex; mode=display">
+\frac{1}{2}\left \| \omega \right \|^2 +C\sum_{i=1}^{n} \xi_i</script><p>($\xi_i$为松弛变量Slack Variable)</p>
+<p>($C\sum_{i=1}^{n} \xi_i$为正则项Regulation Term)</p>
+<p>(正则项中的$C$是事先设定的参数，是用来平衡$\omega$项和正则项在最后的目标函数中的权重)</p>
+<h2 id="限制条件："><a href="#限制条件：" class="headerlink" title="限制条件："></a><strong>限制条件：</strong></h2><script type="math/tex; mode=display">
+y_i[\omega^Tx_i+b]\ge1-\xi_i(i=1\sim n)\\
+\xi_i\ge0</script><blockquote>
+<p>要限制$\xi_i$不能特别大，否则限制条件虽然会被满足，但优化问题会变得非常发散</p>
+</blockquote>
+<h1 id="低维到高维映射"><a href="#低维到高维映射" class="headerlink" title="低维到高维映射"></a>低维到高维映射</h1><p>高维映射$\varphi(x)$：<code>把低维的矢量映射到高维，在高维里面找直线</code></p>
+<script type="math/tex; mode=display">x \rightarrow \varphi(x)</script><p>考虑如下异或问题</p>
+<p><a href="https://imgchr.com/i/wPhKER" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/03/wPhKER.th.png" alt="wPhKER.th.png"></a></p>
+<script type="math/tex; mode=display">
+x_1=\begin{bmatrix}
+0\\
+0\end{bmatrix}\in C_1
+
+x_2=\begin{bmatrix}
+1\\
+1\end{bmatrix}\in C_1
+\\
+x_3=\begin{bmatrix}
+1\\
+0\end{bmatrix}\in C_2
+
+x_4=\begin{bmatrix}
+0\\
+1\end{bmatrix}\in C_2</script><p>该例子属于线性不可分，但如果我们定义由二维至五维的映射$\varphi(x)$</p>
+<script type="math/tex; mode=display">
+{\color{RoyalBlue}\varphi(x):x=\begin{bmatrix}
+a\\
+b
+\end{bmatrix}
+\to
+\varphi(x)=\begin{bmatrix}
+a^2\\
+b^2\\
+a\\
+b\\
+ab\end{bmatrix}}
+\\
+则有：
+\varphi(x_1)=\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+0\end{bmatrix}\in {\color{Purple}C_1}
+\varphi(x_2)=\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\end{bmatrix}\in {\color{Purple}C_1}
+\\
+\varphi(x_3)=\begin{bmatrix}
+1\\
+0\\
+1\\
+0\\
+0\end{bmatrix}\in {\color{Orange}C_2}
+\varphi(x_4)=\begin{bmatrix}
+0\\
+1\\
+0\\
+1\\
+0\end{bmatrix}\in {\color{Orange}C_2}
+\\
+对于以上的\varphi(x_i)的值,需要给出\omega和b的值\\使限制条件{\color{RoyalBlue}y_i[\omega^T\varphi(x_i)+b]\ge1(i=1 \sim n)}成立\\
+可以设
+\omega=\begin{bmatrix}
+-1\\
+-1\\
+-1\\
+-1\\
+6\end{bmatrix}
+b=1
+\\
+则：\\
+\omega^T\varphi(x_1)+b=1 \in C_1\\
+\omega^T\varphi(x_2)+b=3 \in C_1\\
+\omega^T\varphi(x_3)+b=-1 \in C_2\\
+\omega^T\varphi(x_4)+b=-1 \in C_2\\</script><pre><code>在特征空间里随机的选一些点，同时把所选的点随机的标上圆圈和叉，在越高维的特征空间里做这个操作，这些点被线性分开的概率越大。
+在无限维的特征空间里做这个操作，被线性分开的概率是1
+</code></pre><p>$\varphi(x)$可以是无限维，若$\varphi(x)$是无限维的情况下，$\omega^T$也是无限维的，则变得不可操作。</p>
+<h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>我们可以不知道无限维映射$\varphi(x)$的显式表达，我们只要知道一个核函数(Kernel Function)</p>
+<script type="math/tex; mode=display">
+{\color{RoyalBlue}K(x_1,x_2)=\varphi(x_1)^T\varphi(x_2)}</script><p>(K是一个数，等号右侧是$\varphi(x_1)$和$\varphi(x_2)$两个无限向量的内积)</p>
+<blockquote>
+<p>对于任何两个向量$x_1 x_2$都能算出K，不需要找出$\varphi$的具体形式，此优化问题一样可解</p>
+</blockquote>
+<p>则$y_i[\omega^T\varphi(x_i)+b]\ge1(i=1\sim n)$这个优化式仍可解。</p>
+<h2 id="高斯核函数"><a href="#高斯核函数" class="headerlink" title="高斯核函数"></a><a href="https://baike.baidu.com/item/%E9%AB%98%E6%96%AF%E6%A0%B8%E5%87%BD%E6%95%B0/6661425?fr=aladdin" target="_blank" rel="noopener">高斯核函数</a></h2><script type="math/tex; mode=display">
+{\Large K(x_1,x_2)=e^{-\frac{\left \|  x_1-x_2 \right \|^2}{2\sigma^2}}=\varphi(x_1)^T\varphi(x_2)}</script><blockquote>
+<p>上式的$\varphi(x)$是无限维度的</p>
+</blockquote>
+<h2 id="多项式核函数"><a href="#多项式核函数" class="headerlink" title="多项式核函数"></a>多项式核函数</h2><script type="math/tex; mode=display">
+K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
+<p>$d$是多项式阶数 上式的$\varphi(x)$是有限维度的</p>
+</blockquote>
+<h2 id="Mercer’s-Theorem"><a href="#Mercer’s-Theorem" class="headerlink" title="Mercer’s Theorem"></a>Mercer’s Theorem</h2><blockquote>
+<script type="math/tex; mode=display">
+泛函分析中的Mercer 定理：任何半正定的函数都可以作为核函数。\\所谓半正定的函数f(x_i,x_j)，是指拥有训练数据集合(x_1,x_2,...x_n) ，\\我们定义一个矩阵的元素 a_{ij} = f(x_i,x_j) ，这个矩阵式n*n的，如果这个矩阵是半正定的，\\那么f(x_i,x_j)就称为半正定的函数。这个Mercer定理是核函数必要条件.</script></blockquote>
+<p>$K(x_1,x_2)$能写成$\varphi(x_1)^T\varphi(x_2)$的充要条件：</p>
+<ul>
+<li><script type="math/tex; mode=display">K(x_1,x_2)=K(x_2,x_1)（交换性）</script></li>
+<li><script type="math/tex; mode=display">\forall C_i,x_i (i \sim N)有：\sum_{i=1}^{N}\sum_{j=1}^{N} C_i C_j K(x_i,x_j)\ge0 （半正定性）</script></li>
+</ul>
+<h1 id="原问题和对偶问题"><a href="#原问题和对偶问题" class="headerlink" title="原问题和对偶问题"></a>原问题和对偶问题</h1><p>优化理论推荐书籍：</p>
+<ol>
+<li><p><a href="https://web.stanford.edu/~boyd/cvxbook/" target="_blank" rel="noopener">《Convex optimization》</a>Stephen Boyd &amp; Lieven Vandenberghe.&ensp; <a href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf" target="_blank" rel="noopener">Convex optimization.pdf</a> </p>
+</li>
+<li><p><a href="https://labs.xjtudlc.com/labs/wldmt1/books/Optimization/Nonlinear%20programming%20Theory%20and%20Algorithms.pdf" target="_blank" rel="noopener">《Nonlinear Programming》</a></p>
+</li>
+</ol>
+<h2 id="原问题-Prime-Problem"><a href="#原问题-Prime-Problem" class="headerlink" title="原问题 Prime Problem"></a>原问题 Prime Problem</h2><p><code>原问题非常普适</code></p>
+<p>最小化：<br>$f(\omega)$</p>
+<p>限制条件：$g_i(\omega)\le0(i=1 \sim K)$</p>
+<p>&emsp;&emsp;&emsp;$h_i(\omega)=0(i=1 \sim M)$</p>
+]]></content>
+      <tags>
+        <tag>Machine-Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>支持向量机（线性模型）</title>
+    <url>/2020/08/26/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%89/</url>
+    <content><![CDATA[<p>浙江大学 机器学习课程笔记归纳</p>
+<a id="more"></a>
+<h1 id="01-教科书介绍"><a href="#01-教科书介绍" class="headerlink" title="01 教科书介绍"></a>01 教科书介绍</h1><p>（1）机器学习，周志华，清华大学出版社，2016 （知识点全面，编程方面薄弱）</p>
+<p>（2）统计学习方法，李航，清华大学出版社，2012（数学推导丰富清楚）</p>
+<p>（3）Machine Learning in Action, P.Harrington,人民邮电出版社</p>
+<p>（4）Pattern Recognition and Machine Learning （模式识别与机器学习），Christopher M. Bishop, 2006</p>
+<p>（5） Machine Learning: A Probabilistic Perspective, K. P. Murphy,  （概率论角度讲述机器学习）</p>
+<p>（6）Machine Learning （机器学习）, Tom M. Mitchell, 机械工业出版社，2003年，（机器学习领域最早的一本教科书）</p>
+<p>（7）Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, 2016.（网络上公开可以下载）</p>
+<p>（8）<a href="https://www.coursera.org/course/ml" target="_blank" rel="noopener">Stanfrod Web course by Andrew Ng</a></p>
+<p>（9）<a href="https://cs231n.Stanford.edu" target="_blank" rel="noopener">Stanfrod Web course by Fei-fei Li</a></p>
+<hr>
+<h1 id="02-没有免费午餐定理-No-Free-Lunch-Theorem"><a href="#02-没有免费午餐定理-No-Free-Lunch-Theorem" class="headerlink" title="02 没有免费午餐定理(No Free Lunch Theorem)"></a>02 没有免费午餐定理(No Free Lunch Theorem)</h1><p>“没有免费午餐定理”（No Free Lunch Theorem）: 任何一个预测函数，如果在一些训练样本上表现好，那么必然在另一些训练样本上表现不好，表现好与表现不好的情况一样多。</p>
+<p><strong>如果我们不对特征空间有先验假设，则所有算法的平均表现是一样的</strong></p>
+<p><strong>我们认为：特征差距小的样本更有可能是同一类</strong></p>
+<h1 id="03-概念介绍"><a href="#03-概念介绍" class="headerlink" title="03 概念介绍"></a>03 概念介绍</h1><h2 id="Three-categories-of-machine-learning-algorithms"><a href="#Three-categories-of-machine-learning-algorithms" class="headerlink" title="Three categories of machine learning algorithms:"></a>Three categories of machine learning algorithms:</h2><ul>
+<li>Supervised learning - SVM , NEURAL NETWORKS</li>
+<li>Unsupervised learning - CLUSTERING , EMALGORITHM PCA</li>
+<li>Semi-Supervised Learning （前三类基于是否标签分类，均有目标，对于测试数据，我们的算法要预测测试数据的标签）</li>
+<li>Reinforcemenet Learning (基于是否有目标 (eg.自动驾驶 计算机下棋) 关注点在最后的结果)</li>
+</ul>
+<p>Supervised learning : The machine learning task of inferring a function from labeled training data.</p>
+<p>Supervised learning can be further divided into <strong>classification</strong> and <strong>regression</strong></p>
+<blockquote>
+<p>classification(分类) 表示离散的值</p>
+<p>regression(回归) 表示所有的标签是连续的值</p>
+</blockquote>
+<p>Task 1 : Face Verification</p>
+<p>目前来说，在人脸识别任务中，是一个classification问题，标签是离散的。</p>
+<p>Task : Face Age Estimation &amp; Gender Identification</p>
+<p>预测年龄是一个regression问题</p>
+<p>分类和回归没有明确的界限 两个问题的算法基本通用</p>
+<h1 id="04-支持向量机（线性模型）问题-Support-Vector-Machine"><a href="#04-支持向量机（线性模型）问题-Support-Vector-Machine" class="headerlink" title="04 支持向量机（线性模型）问题 (Support Vector Machine)"></a>04 支持向量机（线性模型）问题 (Support Vector Machine)</h1><p>对于样本数较小的问题 用支持向量机都会得到比较好的结果</p>
+<p>该方法由苏联人Vapnik发明</p>
+<h2 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h2><p>一条直线可分开样本集class1 &amp; class2 叫线性可分训练样本集(Linear Separable)，相对的有：非线性可分(Non-linear Separable)</p>
+<blockquote>
+<p><a href="https://imgchr.com/i/dWqW24" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/08/26/dWqW24.th.png" alt="dWqW24.th.png"></a></p>
+<p>假定特征的测量是有误差的，2号线对于误差的容忍程度多一点</p>
+</blockquote>
+<h2 id="2号线如何取"><a href="#2号线如何取" class="headerlink" title="2号线如何取"></a>2号线如何取</h2><p>首先定义一个衡量每一条线的一个标准（性能指标）</p>
+<ol>
+<li>对于每一条线都能算出一个性能指标</li>
+<li>2号线对于此性能指标能算到最大</li>
+</ol>
+<p>对于任何一条可分开样本集的线，向一侧平行地移动，直到插到样本集class1的某一个或某几个样本；再向另一侧平移，直到插到样本集class2的某一个或某几个样本。</p>
+<blockquote>
+<p><a href="https://imgchr.com/i/dWxwxU" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/08/26/dWxwxU.th.png" alt="dWxwxU.th.png"></a></p>
+<p>$d$:间隔(Margin)</p>
+<p><em>最大化间隔则能得到2号线</em></p>
+<p>将平行线插到的向量叫支持向量(support vector)</p>
+<p>画出这条线，只跟支持向量有关，所以适合用在小样本的问题上。</p>
+</blockquote>
+<p><strong>定义：</strong><br>1、训练数据和标签<br>$(x_1,y_1) (x_2,y_2)……(x_N,y_N)$<br>，所有的$x$都是一个向量，$y$是标签，$y_i=+1或-1$</p>
+<blockquote>
+<p>要找一条直线 二维时是一条直线 三维时是一个平面 四维或大于四维时都是超平面</p>
+</blockquote>
+<p>2、线性模型：超平面参数：$(\omega,b)$ 超平面(Hyperplane)线性方程表达式：$\omega^{T}x+b=0$</p>
+<blockquote>
+<p>$x_1$是向量 $y$是标签 </p>
+<p>$\omega$是向量 $b$是常数 </p>
+<p>$\omega$转置后与$x_1$相乘得常数  </p>
+<p>$\omega$也是一个向量 它的维度和$x$的维度是一样的</p>
+<script type="math/tex; mode=display">
+x_{1}=
+\begin{pmatrix}  
+ x_{11}  \\  
+ \vdots  \\  
+ x_{1m}  \\
+\end{pmatrix}</script><script type="math/tex; mode=display">
+\omega_{1}=
+\begin{pmatrix}  
+ \omega_{11}  \\  
+ \vdots       \\  
+ \omega_{1m}  \\
+\end{pmatrix}</script><p>机器学习过程：通过训练数据在模型的限定下把$\omega$和$b$求出来</p>
+</blockquote>
+<h2 id="线性可分数学定义"><a href="#线性可分数学定义" class="headerlink" title="线性可分数学定义"></a>线性可分数学定义</h2><p>一个训练集线性可分是指</p>
+<script type="math/tex; mode=display">
+\left \{ \left ( x_{i},y_{i} \right )  \right \} _{i=1\sim N} \\
+
+\exists \left ( \omega ,b \right )  ，使：对 \forall i=1\sim N 
+有：\\
+
+1. 若 y_i=+1 , 则 
+\omega^{T}x_{i}+b\ge 0 \\
+
+2. 若 y_i=-1 , 则
+\omega^{T}x_{i}+b<0</script><blockquote>
+<p>写成<br>$\omega^{T}x_{i}+b\le 0$</p>
+<p>$\omega^{T}x_{i}+b&gt;0$<br>也是完全一样的<br>$<br>\left ( \omega ,b \right ) = -\left ( \omega’ ,b’ \right )<br>$</p>
+</blockquote>
+<p>上述1.和2.在$y_{i}$取+1和-1的情况下可以简化合并为：</p>
+<script type="math/tex; mode=display">
+y_{i}[\omega^{T}x_{i}+b]\ge0 (公式1)</script><h2 id="支持向量机的优化问题："><a href="#支持向量机的优化问题：" class="headerlink" title="支持向量机的优化问题："></a>支持向量机的优化问题：</h2><p>  这里的优化问题是一个<a href="https://zhuanlan.zhihu.com/p/85408804" target="_blank" rel="noopener">凸优化</a>问题，其中的二次规划问题。</p>
+<pre><code>二次规划问题(Quadratic Programming)：
+
+ 1. 目标函数(Objective Function)是二次项
+
+ 2. 限制条件是一次项
+
+结果要么无解，要么只有一个极值
+</code></pre><p>最小化(Minimize):</p>
+<script type="math/tex; mode=display">\left \| \omega \right \|^2</script><blockquote>
+<p>最小化(Minimize)也可写成</p>
+<script type="math/tex; mode=display">
+\frac{1}{2}\left \| \omega \right \|^2</script><p>好处是求导方便</p>
+</blockquote>
+<p>限制条件(Subject to):</p>
+<script type="math/tex; mode=display">y_i[\omega^Tx_{i}+b]\ge1  (i=1\sim n)</script><blockquote>
+<p>限制条件(Subject to)$\ge$右侧的1可以改为任意整数，求出的结果都是同一个平面，它们的差距只有一个常数$a$</p>
+<p>如果数据集线性不可分，所有的$\omega$和$b$都不可能满足限制条件(Subject to)</p>
+</blockquote>
+<p>事实1：$\omega^Tx+b=0$ 与 $a\omega^Tx+ab=0$是同一个平面。$a\in R^+$</p>
+<p>若$(\omega,b)$满足公式1，则$(a\omega,ab)$也满足公式1 (前提是$a$是一个正数，是负数的话公式久就倒了)</p>
+<p>事实2：点到平面距离公式，<br>平面：$\omega_1x+\omega_2y+b=0$，<br>则$(x_0,y_0)$到此平面的距离：</p>
+<script type="math/tex; mode=display">
+d=\frac{\left|\omega_1 x_0+\omega_2 y_0+b\right|}{\sqrt{\omega_1^2+\omega_2^2}}</script><p>向量$x_0$到超平面$\omega^Tx+b=0$的距离：</p>
+<script type="math/tex; mode=display">
+d=\frac{\left| \omega^Tx_0+b \right|}{\left \| \omega \right \|} 其中 \left \| \omega \right \| = \sqrt{\omega_1^2+\omega_2^2+ \cdots +\omega_m^2}</script><blockquote>
+<script type="math/tex; mode=display">
+\left \| \omega \right \| = \sqrt{\omega_1^2+\omega_2^2+ \cdots +\omega_m^2}</script><p>也叫作<a href="https://baike.baidu.com/item/%E8%8C%83%E6%95%B0/10856788?fr=aladdin" target="_blank" rel="noopener">2-范数</a>，就是通常意义下的距离。</p>
+<p>我们可以用$a$去缩放</p>
+<script type="math/tex; mode=display">(\omega,b)-->(a\omega,ab)</script><p>最终使在支持向量上有：</p>
+<script type="math/tex; mode=display">
+\left|\omega^Tx_0+b\right |=1</script><p>此时支持向量与平面距离</p>
+<script type="math/tex; mode=display">
+d=\frac{1}{\left\| \omega \right\|}</script></blockquote>
+<hr>
+<blockquote>
+<p>支持向量机的理论推导 :  <a href="https://kdocs.cn/l/chTOq7Uj9qL1[金山文档" target="_blank" rel="noopener">https://kdocs.cn/l/chTOq7Uj9qL1[金山文档</a>] 1. 支持向量机的理论推导.pdf</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Machine-Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>研究方法归纳</title>
+    <url>/2020/08/05/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95%E5%BD%92%E7%BA%B3/</url>
+    <content><![CDATA[<p>蒙特卡罗方法<br><a id="more"></a></p>
+<h1 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h1><h2 id="提出"><a href="#提出" class="headerlink" title="提出"></a>提出</h2><p>蒙特卡罗方法于20世纪40年代美国在第二次世界大战中研制原子弹的“曼哈顿计划”计划的成员S.M.乌拉姆和J.冯·诺伊曼首先提出。数学家冯·诺伊曼用驰名世界的赌城—摩纳哥的Monte Carlo—来命名这种方法，为它蒙上了一层神秘色彩。在这之前，蒙特卡罗方法就已经存在。1777年，法国数学家布丰（Georges Louis Leclere de Buffon，1707—1788）提出用投针实验的方法求圆周率π。这被认为是蒙特卡罗方法的起源。</p>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>当所求解问题是某种随机事件出现的概率，或者是某个随机变量的期望值时，通过某种“实验”的方法，以这种事件出现的频率估计这一随机事件的概率，或者得到这个随机变量的某些数字特征，并将其作为问题的解。</p>
+<h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><p>蒙特卡罗方法的解题过程可以归结为三个主要步骤：构造或描述概率过程；实现从已知概率分布抽样；建立各种估计量。</p>
+<ul>
+<li>构造或描述概率过程</li>
+</ul>
+<p>对于本身就具有随机性质的问题，如粒子输运问题，主要是正确描述和模拟这个概率过 程，对于本来不是随机性质的确定性问题，比如计算定积分，就必须事先构造一个人为的概率过程，它的某些参量正好是所要求问题的解。即要将不具有随机性质的问题转化为随机性质的问题。</p>
+<ul>
+<li>实现从已知概率分布抽样</li>
+</ul>
+<p>构造了概率模型以后，由于各种概率模型都可以看作是由各种各样的概率分布构成的，因此产生已知概率分布的随机变量（或随机向量），就成为实现蒙特卡罗方法模拟实验的基本手段，这也是蒙特卡罗方法被称为随机抽样的原因。最简单、最基本、最重要的一个概率分布是（0，1）上的均匀分布（或称矩形分布）。随机数就是具有这种均匀分布的随机变量。随机数序列就是具有这种分布的总体的一个简单子样，也就是一个具有这种分布的相互独立的随机变数序列。产生随机数的问题，就是从这个分布的抽样问题。</p>
+<p>在计算机上，可以用物理方法产生随机数，但价格昂贵，不能重复，使用不便。另一种方法是用数学递推公式产生。这样产生的序列，与真正的随机数序列不同，所以称为伪随机数，或伪随机数序列。不过，经过多种统计检验表明，它与真正的随机数，或随机数序列具有相近的性质，因此可把它作为真正的随机数来使用。由已知分布随机抽样有各种方法，与从(0,1)上均匀分布抽样不同，这些方法都是借助于随机序列来实现的，也就是说，都是以产生随机数为前提的。由此可见，随机数是我们实现蒙特卡罗模拟的基本工具。</p>
+<ul>
+<li>建立各种估计量</li>
+</ul>
+<p>一般说来，构造了概率模型并能从中抽样后，即实现模拟实验后，我们就要确定一个随机变量，作为所要求的问题的解，我们称它为无偏估计。建立各种估计量，相当于对模拟实验的结果进行考察和登记，从中得到问题的解。</p>
+<h2 id="数学应用"><a href="#数学应用" class="headerlink" title="数学应用"></a>数学应用</h2><p>通常蒙特·卡罗方法通过构造符合一定规则的随机数来解决数学上的各种问题。对于那些由于计算过于复杂而难以得到解析解或者根本没有解析解的问题，蒙特·卡罗方法是一种有效的求出数值解的方法。一般蒙特·卡罗方法在数学中最常见的应用就是蒙特·卡罗积分。</p>
+<h2 id="工作过程"><a href="#工作过程" class="headerlink" title="工作过程"></a>工作过程</h2><p>在解决实际问题的时候应用蒙特·卡罗方法主要有两部分工作：</p>
+<ul>
+<li>用蒙特·卡罗方法模拟某一过程时，需要产生某一概率分布的随机变量。</li>
+<li>用统计方法把模型的数字特征估计出来，从而得到实际问题的数值解。</li>
+</ul>
+<h2 id="分子模拟计算"><a href="#分子模拟计算" class="headerlink" title="分子模拟计算"></a>分子模拟计算</h2><p>使用蒙特·卡罗方法进行分子模拟计算是按照以下步骤进行的： </p>
+<ul>
+<li>使用随机数发生器产生一个随机的分子构型。</li>
+<li>对此分子构型的其中粒子坐标做无规则的改变，产生一个新的分子构型。</li>
+<li>计算新的分子构型的能量。</li>
+<li><p>比较新的分子构型于改变前的分子构型的能量变化，判断是否接受该构型。</p>
+<blockquote>
+<p>若新的分子构型能量低于原分子构型的能量，则接受新的构型，使用这个构型重复再做下一次迭代。 若新的分子构型能量高于原分子构型的能量，则计算玻尔兹曼因子，并产生一个随机数。若这个随机数大于所计算出的玻尔兹曼因子，则放弃这个构型，重新计算。 若这个随机数小于所计算出的玻尔兹曼因子，则接受这个构型，使用这个构型重复再做下一次迭代。</p>
+</blockquote>
+</li>
+<li><p>如此进行迭代计算，直至最后搜索出低于所给能量条件的分子构型结束。</p>
+</li>
+</ul>
+<h2 id="项目管理"><a href="#项目管理" class="headerlink" title="项目管理"></a>项目管理</h2><p>项目管理中蒙特·卡罗模拟方法的一般步骤是：</p>
+<ul>
+<li>对每一项活动，输入最小、最大和最可能估计数据，并为其选择一种合适的先验分布模型；</li>
+<li>计算机根据上述输入，利用给定的某种规则，快速实施充分大量的随机抽样</li>
+<li>对随机抽样的数据进行必要的数学计算，求出结果</li>
+<li>对求出的结果进行统计学处理，求出最小值、最大值以及数学期望值和单位标准偏差</li>
+<li>根据求出的统计学处理数据，让计算机自动生成概率分布曲线和累积概率曲线(通常是基于正态分布的概率累积S曲线)</li>
+<li>依据累积概率曲线进行项目风险分析。</li>
+</ul>
+<h2 id="力学应用"><a href="#力学应用" class="headerlink" title="力学应用"></a>力学应用</h2><p>在力学中，蒙特卡罗方法多被用来求解稀薄气体动力学问题，其中最为成功的是澳大利亚G.A.伯德等人发展的直接模拟统计试验法。</p>
+<p>此法通过在计算机上追踪几千个或更多的模拟分子的运动、碰撞及其与壁面的相互作用，以模拟真实气体的流动。它的基本假设与玻耳兹曼方程一致，但它是通过追踪有限个分子的空间位置和速度来代替计算真实气体中分布函数。模拟的相似条件是流动的克努曾数（Kn）相等，即数密度与碰撞截面之积保持常数。对每个分子分配以记录其位置和速度的单元。在模拟过程中分别考虑分子的运动和碰撞，在此平均碰撞时间间隔内，分别计算分子无碰撞的运动和典型碰撞。若空间网格取得足够小，其中任意两个分子都可以互相碰撞。</p>
+<p>具体决定哪两个刚体分子相撞，是随机取一对分子，计算它们的相对速度，根据此值与最大相对速度的比值和随机取样比较的结果，来决定该对分子是否入选。碰撞后分子的速度根据特定分子模型的碰撞力学和随机取样决定。分子与壁面碰撞后的速度，则根据特定的反射模型和随机取样决定。</p>
+<p>对于运动分子的位置和速度的追踪和求矩可以得出气体的密度、温度、速度等一些感兴趣的宏观参量。而对于分子与壁面间的动量和能量交换的记录则给出阻力、举力和热交换系数等的数学期望值。</p>
+]]></content>
+      <tags>
+        <tag>Science</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>交通流理论笔记</title>
+    <url>/2020/07/02/%E4%BA%A4%E9%80%9A%E6%B5%81%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">You can contact me for a password</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="dc741459befbd5e99d4fb91569158fad4cd1993f731790f1f27fdec715582458">5343958463cf41a95f73f8321bff96fd05eb026712ed751421db4993db2e3c7c0011c0c130f94359174c8593d153e46aa72bed9c46d8949056ebb7aa80ec170d4cb8071b0bfb9a9fe72b83438f701d33501afdcb7ab9d7d49314fef1e91f16a2dbe0d06798d11d1e13697db39cf3cc91ae124cfe95b2dbbaafea32945f6514f100fd7bb80bfca6d333d26e13bd1d86555d8c27a3043e727a450a831ef1b1cc8cfe2c4dd23066f22f8d0e693ff72c50d3cad544426d4f88c57797bb7ce636f31f4a34aebf5cabf23c2935c32aeced3f9bdc0909bafd425dca1b17bb75491fc251363006bb3091ee9007caef873376aa4ccbab42a8a64af0be4431a43918d9320c3bbc99621524096c07374075ff5354dcbfa7a0990757316eb1e237bbce74439baf12330875721341e743fc55c3c7bfbbad094126e35b8e1c32f0a210a4b8fb0f79b1ba40a4aba2cb359beebc6c86f6c5d34deabf832b817f66bc72abc777073bb1fcb7fb06870fe46759fdb6f70ae932687d15784dd78beeeeb4291b1a7459323322d2a36ce0ee49efef327a9016f146a678ca93595a20a32840ce027911aacfec69b15476c84a77b2e0ad60ac1407ee96795ee16d9cbc64e9e106102d5898d29257a57147cc4d9dd8bad886c170d901bcfeba1f45da423b5f1cb92eebf353133645c16437c43605c6b89a2f064444f8c0e99c028465719bf07b1e2ba0c3bda523d6bb306d6cdc96be05a0a9035d6f8ab689de701875e0f7fcd85834afc69b6ff9701c3ea385d3fb85f704be7184bacb4ece6d6312747d055cf520b9b150d94d908d7cc02f7713f48075bbdb5239adbd87766f15faf695499073809c0137b42049791318775361ee717f6c38a3732e6f1cb80fef49fb50935b1ec7b1f8e55a12204d2577b9b87ef6d68ec93e297f5c426c53dc4dad3e72d98d8a457252971559c7864fbe63be25f30ad0e3539256e70a2f4e24445cca585fe73068e6fa0422cf69c6bc7066659bc58a2683074b84aeb7a313893d22ad2b52425f0ccd4e6107c0115412a27b4665069f4bdd37b934a88a2eca71d2d38418cb24c0c019f714891c6015b344ee4e2c9f0154041f6fbd6c38bb75bec3d1c596e6b4282765289843758143d2045ecdd2d27b15199edb7a9dfcbadd2133baa98d43f3733e935e98e43608ec4265eaefd36ff5e8398664aa37c38e367f0356141e16909d7a96ba695fc6293bb47a4ebd540838647e0ba94a25e545504e92b0c6c4337e21e683569bdbd838348790a422d5aa68aaa10ed437d364ef2c4b940b5c0256e080df12674272b117378d2c0eed13780aa502ba6afaecd6b285632fff67edbd72e50ee33957dcd43f3b31eb8f4dd02eafed1c8e0cd8f7184c51ee8e6ed33b5cc2d6f63cdecd0df6b12ac5f5bab58965fee9270600edd1c6063ab7f2d0ec9a6b28bd7ed86ac10662c9454c04ac2a615906e3b1e3a3af4b59d2b75d932f724d8259027c8043332a8955ed7ba4b2c1b7e1cdad80a5c4f98ce542e6ab84a790d4d1845783624ed61199fa654f6719e0a9b7962ba4ee62e3f80d0252b0c9ca91f4b29b5850d3fe2169e5c85b3aafb62ded511476183657104780e5861a811d94fc15ba2625bfed12009cba9ebde550a694f0640b26a2acdf9499edbca7601b469752ed09abb07fe8ff39679862ffe593ddb49703f054c3a1485c476430bdb2ee6f2a857cfc7ad4f877ee7d84ef1f3b65c363bb5b478193a8876d6eceef4d1675d708675c42fca39e455f778810885704935204e38acad4e3304068ea2b91bf2feef44d0f0156bb91b3f8fc5298779496f828c9cb7dfa223e15a880c7dc1fb2f53a6204866f57b531acf3637cd18a3058ae03efdd5d1b893da80e81a7b261dbd9f0fba45e694e4b85b9fea71a917a251ffeda2ddd73b6be0ba95f1c3e332a0cee371bfe2fba94662797e04238f8c7eb4cf7857c453a3e674cedde28ae685a794c7c08c648d74ee4c5d6b0967f7ea47060e85b21e7d3694b7b0239918021e6642b5d08aadcc12a8a307988aa5dba2e40ec7a8c5856fcbf5376eb0ae58aa8c605ca30bcc907e8064003b8fc79ee3ee6fb35db18672983dcc1b8740a040b86b4ce2e3f7d8afe93ef84e572f1a3b73809dcda7d0b874d5266e7da355f6a456f548523bf156ba69f26a27517c9cadbb70c30bd9766534a6e580f32bd46438385792d1cb0e919c3771be48b46b8f9c1e26246424fb547db073cee64a3b0aad00a8a9bf17a3b8fceba79e8eb262469a96e13a957d5110f0851a7e78f3d10c6b34e058ca9e8d45e45a6e4313b543cbebff544ba46ab86bfb3d822c1f4b145cd6f649ae668917ce8b1a53b340a8db67c7357ff74b8d43d0112d9e60eda1c10e7819fc86eed55afa8e09007426e81a1e5b29113b875dfca65b490f37a7492dc1d603c09ea3a09b0857d887a180adbb375ac404e10d7be41685798e5fd47d254f2f60b3e0ced84e886439289c916846afb5e284ea2edd3da92439e3ab444c432c0fb5199d2c6745b6b03d4bcf74b7839aebe61a21faf83a5006e1b42041a7a54a37f9eb50534a292fd2bdc1d47f4b97f6a5b64ec5dfcb7d7561678acf3849fc7a99341a16e91b7d99d07f34b5364a5683c7445f1263cf9e9a5ffa13c828d4b04ece5e9058a5923bd724e55500005d755094d69745a59d39fe65426eba10257325c60a3d3e4cdf13bff750d3742de93b902387b88934c7681988358c4f50fed127cfc565c994d4fc46a6b84c461a11f0c90efb58fb893136133e7f0f83d640d8518d3b60c13a325730773198a52ab3c6ea49ded4f558a75c04f6920d139f10911debc4755d0bda849e75692899b5aee31ea42ce80ae3fb3f2c62fbcb77b8ba44f9c822119182a1da9fd3a16a7c49ceae058a566e4b26618e0d9edd5ce47fb84a602bde34c8ab12261073c99df87ebc83f650b03abea01a2ccac1911a8d389affc7b021e16c94d805879cf95b9072206f9ac6e7a38e4319662c03844635ca2da87073821c2ebefee4f9a2c2df36a09eb3bbdb2a19aeb0709e2614728f88cd5d25eb1329e76477239927732d9c4d3508d33ea5c2f55ff2726ab7273fa950049367792e0e24a5c08ae0eb01e07d8f7f46655a7dc3156edd87765bf4b958f04ad4642616de776d7f67d5c822e729b08f54dafb883b068e29f945e90ca067b856ba3eaa3ee81c01f8ce00ad621cafc49a3a3556aa34e894badd739edb933271a87aa6cc02bbd1cd558a0e065504364ca150196748e3b7ac2f54dc08b6bac46ddb76d731388a38e7f2ddc3b9b6527ed8605770f6b58fa2f3d9ec83158e7c716a74665177d1a63caa53b681230aad83399f16bd03a9711ccab6695320d66f75e8ec55eca6467f9ed9478de8fc0c072643ef353df671ad8e1fdbc5ed3fcb8afea956802fb16bb46ff98f3a28982bd1aa3f87468d1414feade76fa86b222b16000312b8355603c2feeaa0e82d2b07ea7d24e0ba6e2560d0da5861ab6b312e7162445c747b7333d2836e9100b94af0042bf8404daeea564c708025cbfbad201c43c32e03bded2dbed44490b2916d826ea92df76c6b655d52535f6460b887e655208793bb78de5fc325cfe739120f04844c2a74851b1571b88ade835a54867c0bfeca7a45866ad7885e6117c4d7a7e79cb5ff373e828e635a1d894067526d1cfc0311ab4e9070611a4f595e87163da0eea11d90bed463c69abf8f78b3d351294b4b6ad28a0fad81ce4cb63affc12575a5636e014891527cc7ae85626e9c7bb567ca4ef4abeaa58f8743f3526d81ef6e78ced1b2c01eefa0850a5c870cff8800e3e9d4957d05613b51ddb9449e4cbce013a35e4d432d202dfb723722783bb44a82d38811f2279208e05a880d703a42409ec137806a776dc199ff547bb4bd455c68b58afc7cd0f77648036d811595cc6408c9ff33439f0f7400d2bf9ccd85c8c4aa1d6a8ba787ec329d8712ce738be9cd0da91eb5e37812b698c99a37fbf908cc8b81db2938840a844d50d415dac81fd05053cf0b6b4890a43f7907079aba632c7d36bbcad8095f15c9c8332cfc7d81f80805e353dbb17b831be9bd1dbe5e5c8da4a3111699bf3a689f3569857f4507d068b45ea27f0ae22c636aa2e2d7e3cd5bf07aefa28000e6cc21ceac281c934157a69ef80920ba34d3d63958c01dadcfe8b1cd9f02b87fc4f44415425c0e82281f89f067a06fff57c961f8f490fd233f3a7a74e075ab56770ee03ad51b7f0f596a5b345bce92f1c8370848f4516ca72d3f81ee31a622c04e7235458ffff887ac70c33f94f881c529334ea9d0f5b560ba5fc697d8d8654cd921379c9b56760fef2d1e198dfda18540de809ceec151550c2450531de48057421bdfb0e58c00b07df03400c7e12ec69ea8c08d1eda62f01c59ea3de9c37fe916aff8c50de3eaa9e310ffae3e64791eaffe4aeada8a9353ab6128afc4940aaf14686463018a6d2b0c03ffc80ebf38002acf3750ecec8af6a5c8cc7bc4be26b442c3ebe5ce679ac3c2dbb6db0308f7fd703fd82fb7d557ea826be4be094bb994f1eb19fefd69a6371c5349edc10bda1b5e257140b571ef98b260c597ccbcbc43195b2f4903f8338d4a59722eab06314353b9bc5db1ac8efb234d8c52681e968d72d715ba26dfa0d8c96e33e061668c34b3d43834775e9761ac3ba82770e03d46ebc595cc222bfa7fa5891712336ef95d70b50fd911e0a2300c5691f371c5495b414c11af6474b97826267459f81b939ae2eaa00f07be3d034c74b0e7cfa909d68725718c1ebc2a71370b4e4c3d6b4ff60a0a9c923d77d26c96ba2e04a945f03e4f93b0efc48ad35357dfff896c7fedc6dca229a02932280b1ae11432e7a0862f0b65b584b58d6227f97a3a4a243348a4e2ff675217fdae7fd9b3cf0fd97b39faaa8b302807e1c8ed2d509daa507624f782cf15d1bd8df61844ed05eeb13cbdee6f48159c3ba7244739f7dfd6888bb790a25ec296774e430c7ad9bcffd65f70d973abc07d4a60b7dab4a0d5b91a079c276f0ef44aebcbd63fc612e38198ca8d0fea39259ccac332700e2aa0ae6d3ff12b5bbbc9a11b8a003d67b163b14e0c43a87edb856d2f324506afcb99c84e84fda0d121ace96106ba6fc12b6ddee550999d790baa4c26ef621ec1deae210993f772f29ce81b526135e621043815e26147f586851cb2bd6f8257ea589cb031f930e65280f9b87900874a800e36a00f6e090a3c5e833cf86ec787cb4dc3d82af53dd7d645ee24a96fb0b98eada2536b14f2d4e3b55e01ac3b592d3e926f3938c6de96fabd2332faeb3f94423683e346c1d1b0d07abc5ee94f35782af2768d859af27a2ffddc4e2f5cc4255106cb61d7001e2efb39bb1620e089b1202c6fca68d22b2e2bc9e1e44713fc8d932835210875ddf1434f6c4db118e79c4be6f896d9a1d961da3dd8c3d1d44773b4b03a6fc0f103a55e510f787d2974b236f4bfefce9fbdaa6a6e71934f5191d2dcaf1f23461900753bb737b8e0b5ffe505c1148ccc218b44ca4e748a7667b496f0072d23e63e1efe89d87d3b02cb0c0addd1895fb5e75c80343548e7c3652fab93a73976109153834a92ae1faedf74c1b35fc5183d4d29978320c493da0d0126f7c3c3a27fdbbbe79e4b755776f004d7d787c6b79a8ab0d03d853e51e0255c345bded055326dc47228ef6735a4947f333c3cca11ea5bb792830bd7ccf31cd39983905e325871be7f574b7ad2a131995664c42e8baeb5b3c524bf8b76b79e4c18459e6576905d5c5912f922450d35bd99a528fc11d331387c775f7e7b33ee6608f467cfba0e61b8dba60452e17a88e98a4221a12be6dc8f79113f24791821e47cd602914674c28c6b3f8ec386c667a2daf9131715db9e8a8a6332868098679d025fa07ff8f7d14252087026337a9e29f251ee6859d9ddc4483ca36a180550e9bdd6fde47f9119f27956387912c549a905dd45f70a2998af5df69993065c615ed660efdfc20b68d338a6c97aa150f84c96c235f65355ecc1795fa72ce86b024c1ee49ae66f478b29870f6c9202030f2f6d5f2d1326d3759bac63961c8033721b6613f6d22854966ec4909c93831b5be775c742cf40c9e2c6c59d30a6aa270dc440fe772dfe3d542a47c349d2d80033ba86f87639296838ac089a19aa223acf2b9d35e5d5da09604ef7b0c4c40e654d1eab5f1f69f268da220704058e4acea80ea61dd727cafc20a424760b00a62f2331fb2027a52d528774ae14aab10d533888fe8b582b2105c87774523f3310aa3d251262e141ea09cde4cbabf05606be9f68348b1369cb5c52f48f25c4f341a2acffd2e993087dc79681edb66971f37465b48438fd57db652ac2cb5bd56d58e159ad3fe61dd59b1781c38210f2a6714db8cc13f26598d6ad03a5d519d7230393f24cbb2af4cbcdee22ae8b988cce22673193532e959264f995c55d29e95030ff16828d288e2c8e895548375dfe5d457b64fed6e2652b1f8e1134eee55aa7a91adb3474fbdb42e334c978d4807fd4f944a7865da804ee099177f3a52663e2f10d7c4fc9accfdf2e4b6143a836644c3833b51f7374bbcebd9fb08925f04ee232fee4b860acf08f018e9eec966738ee77357fef31c1cf2b9a0b8dec56da24a1abc1f56aff5475569b5e79c7d19cc65ae295d8a50dc3faf64f4704246e89cd3d8691ae29e6d42c3abecbbd5773cf4f391448a080a081952d6dd6106d61f8ad30991eb7d55ab3017eaf01a51ffce4164ffc22566b7f58cce77f24693e18e805c80bbd67d954e8715f9590a1ef4ec29706fb283ca342dc02eb7a48ba688402dfc2c5f24a94551c6c276f26bf28c10ec03527cf7ec9980a73d16361fdd4663b1358856a5602cde3124964ab40e2b03871db152b062b85ab81e5a2c2d86c15db9955fb19fc6b1844f4712f18ef846135b0a0cf0aa8a2ff75013ce919470c265224305133c1f35c3279c3a66d336a741c1c9dc668b78b424e18660dda1dccb1b58870d33a5d69a942dc694e4b11cc94c56bdf5f116d937d23b75e8b10726d8c30ef02fe5962882f70ab5f908384b2e54202f47530be7a439c5611fd372933e830630ecc09f9541367f60b6ea998f234ebe24d8f838fd4dc03192906ecaad266dc4373df4391ee1ea77ec037df6d25a94131eab74c69be44c54afc396f82c5819ece83dd0e04c0a4dd959b5adb62d735be4b1a137619d05b6f34687df3865ee1c5cd59f6d3827eac887a7010f20dfbc4376c3a5a57830ed4efa78c4b0c075f23b5eded57d05938c7813af7491f8f14abaf41ec659ce261dc0a97d4cff6bf4b5f465e1462339f77d0910ad0b6bec5b72b2be887518fe9c6a8883cce4c32e35d9344c4fdb7e6a6ab662c012a1d555c35a9aa39fc40087b4b5178f10f15e2a0de4943408fb71c3cebb0fa002d71a204d5f28f834e9e6f462e6b902284a0906be64c6c9fae03837aad9f8cf0182b39fbf5a8d91b28ccdd0d6d2894dc5371076a315d70dbf7e586f223fb3608a14dd2d4d44ac177ef17f3febd0650b7f6a48bf8f5d4156b06dffade46cee42815c3f528ab7398ca0cb07bc7acef237585d3df03f7b9fddffab27a00c631ff7b4bcfccb1f86e2b54f29d9cc53464ec3d6c95a1a3be5c709544d5c099dfccb81472e293a3a344aca30bfa1e140fc85ad148bcd3fdbd4a31f6d52416b7ecf64c625bbacd22d2c769516c8f1edc123bc8bc4e163667ae7e0e84b8aedae8423e07d4b7f35797cece4e23477369b36bb09b72b60bc2e64766663523ded5f12c3346c4291243e550ff6c8d8f0b5345529cb160346ebfcc53a682c312fa40106564b12600cdccc667d2251cbee73d08edff439e82cbdd030a39285876c1a2eec7da2f4b2ac291e59cfa867c34ffabe39fc3c6130cea0ccafd57027e42244c703f5d3bfb106f7991e3bea3d12594df2ed1f0dae35a1087eca953ebc76e7c62e6d05a81096de9ee4bc694be48749b9890365709606b7fd235881244ee1662fd744c3eaca8f34336b486d497f42acf1351c7fb127bac54145dffc488c0257b05a0c853859a6d2634a1d69a1502db2f43fdd777fcf233d1a9bf6380dc0c76f340c7642ff55c5221c76b618c77876d16e1133cb4b5394d5438f98b7846e770b561c20644a74ceb7979a0b22ef0802cce9bee2fca56579ded3f26e59476ad4a4f927a26d38c9368c406c5b63256d5b0da25c43f2168bb054295d806ec89f23d8c4a3c1665efa9db9eed85e509faf0b32e2da53329ff4916760f979b7166cce259cc7dafbd1f029a1d3188ecda25dd2977d827feeab478177f745c75324972754f8d656c602d7938644928ecb12892357fbd5c563a37d58f9476adc6b9c317066095de369313dd52df38163a30099817741ce2054769b8e67e8ff45ee1297c3d2710ca1571bac785ddf2adfd059e5e34e52ee690d60d128656ce714ab187482333ff2c1ea1a7b61e34ba01ab4255f0d3a2ddae2bdd5a9f658a86e87cd45c53a84d4fce3116d4a1d7c6541c223676ccacad563468236353fa8eda48b4b9c7f3a10e7e8256e7096b0996ffd6b2b7141355a4781eef07866d6c3cc76c01de7f41c854d035df675f0a9d7700aa1d7c53fef3fc2d14cf96c9531e2b7936702eea79c4e91262b8594cf267ed7e0171ed2fc10d93d298608030e9029f5a6b599e6018723e917db1390558572633e59428749d3c5a38ee6c8b5c2d593b523e7f70dd4dbbdeeea674c662723dd71ca153b36549858b3d060863268196761914ba4696bd8c2753fb6ea92f068063c57df2f1badd434f0a73782b30f45bf7ce8757dd6e7c8464aee50b0cbff52b93e51f2b2a11ae1e8d3c51d114bf75579f4089b10c07952bd36c63aac08e1b06798550a124e255eee6e4f921e5f89a61789c418707fcd38aa5b2eeb18550cf138516a26404b9310dff0098190e20182254eef6c664778cf4203aa256e8fcbe071395b8f43dfb8cc57d973a2da7fef2a79a86193bb523145db0f9b8a544c7c1bcbb2dbcdd2797bb5a91aa8c4ed48d9a87d1d30b124361958b26f60004f02952efff74f66e4c8bfc02e136f29b7900808b27efa0b74c409da8c044848643ed70ff54d38a4f058dba0d9b6b3d5ec007e31a47d6ed7629a0f6f81d0b9c61ec6eafc6d3d4410c1dbd970448c922d2d6652b7582ad1e737c77b58b71ffa00838461027f5205d0e49f9cdac873011062ed46c422a7d4832dc5893cfa9e4ad13a4bc15a1de0ff7f169ef728b487503fadc664c496dffab03110579b6eb69219585b8108aa21e982b8c42772e3807beb986723d6b9667443b1e38c235b80dba77d0d9fbbd5944f09340dcda9843862e7a59cab9b5031a674e73a643cb71d0b7854d8e15f4dbab9b29e1dc9834e076f18704f67bc52ce0bf4da612129eb767ee6d3aeb44eb7e0dd1d261126f8bc0022037439b32ff03303a908aad7a1a41f5377dc97ef9915be968da11f9b53aafbc76cf879d84fc4d9fb5b648f76b8f7e40359e572506debdc9ddbae0d7be1d16e0cdcce5561ecf9091190bcbab997d5f7cb6c265f2c7ae7a704e9f8824302e1b348d01907c141f39287cafa3d59c7f4ba3f244d1c6be32b56fa2cd7a3da4eaf401222d402f75a7b9a3ef4bab8c8b19e4a63acbc80f5f7039f6c5f66d4ebde59c574a478f21bb44680ab4c0161de5a8c55ee0ac1f9015c695a8d08c7c53515af33e47656d991a57a7188daf58c3c786776e1dc371675abddc2b0dbfc8f07a6ecc33abfd36e2de4acfa39dbee8ce7194f7e2f764ee275138124d290777ad0f8c30c808be5e8b79320b512f4a4f368a3d70fa9db41881402650e0f5886edc0a29ec2157881d2a53c782cb479b3337e2125825c318cda6904246d7bd9f3f3bafbd67d86c59d7385de27239a2d10a6fb1979827bf30de7e9ce3b94146f8c04eedbcec37e949e60d6f041984163e52c322b3c78f1eb6b7b3967993d51414e8c7c0aeaa8cfd34acdd0882a61dc5e2a9a241d2f48e82abc84845b9d7e7ac594a4f0c487d8625cbe1c261a1c5d2ce876c831cf820f64c774b383a95955fe96b4e35641766667ba2c013c17c6b49a4f9842dc9b3baf93ec1b501deaa21cb69912d726c5f98a1eeb6a35df6e21c78fb5f51cd3485ae61efaccbda92b040593d15af126a4dfe59d74218d273346d8063829f5c2738fdcc566dfb8e38c1798178b290d2a18051ac93f814a29a615d1f47e449f2332676c1713fa744b12140f1dc506a9d77c86c3a8473bb8a944e212a6d9c1769e1628586cc6533e8b9b62f899d3c699f6372b94b544c78679034663d1aac85f42454be2beb28a5d81f898f8adf236c07856ac745f138e9e1d1b7768f4df66153a1aed98ca47db9fecea90419cb02d7d3239e09ccadfafdb3deb4d7e1f64a42d3108d6c545d70d00d412d199427621ddeb0ddfdf0d7c9c40d63ffa7ac2a15b65818d1c146bb1759ee7c327c733ef83928e165288225434b189238b667a47149cec5058e0ed819503339b37eca66ff08e315b9cdc4300dfd4aee4c2e999dfb03274ae475026730fde9f470d1e1a4ac239584a89b126c50eed456c36767b05d71588e8c18979d5a7344c93349571c1e540bcf4f3f7d13e3fe9fe8dce0a744798ca24767965c4a72fb1794b5e0aa56430a1897cf7d742d1ce9d67254eb5335abc19c26cca7be291c2ba07a560b0d79b170a9833d9d4a825b585c454a28ee5fee8eb3486ef3c3c6863b29c00e33682c274cb543e5b75c26bad9eebc9e4acfc87af1e7c10dca7648eb18c31c336a907584df69110f4c742cc21abf85fceba2b19972d46455b87163db1ee03edc26a233ccdfe09e22c03f5a3f47c69c9580682a422d23e35aadfe417b3e2bce4d8c4b3ed86cc669708c85049b4c9756983c68d0e1043be2a54c30786dc82246203ac6aa5fc5db0f33e1f73e2c95ee98bef79492006a5ddbfb325e465c61f88f75fbbfb5270648a6f87c198a77fe7767e49f4a750ffc6a41858b40067f984e17fcc6f488dda9bcb44658eb8f39610b7989d92ae6b2193415df9c9722a30a8279c4eb96133d6e9b32b78aafd41dd59b20f7783372dcaf9b250b5fb6ada3ad9278fb5b09c87ccb138c24f29ec724d3cc3473adc4a9ccda4e133d9d99335e5e751e77b5e3a66cb62ea291f479eff93dcf5ecec5571ab84d013a66adb7a948ad17088ac6e9db8ebd8d196c5687398cf1343470c8edfdce98446e27e4f86f4f9997620c2cec2e5fb92421f734f32ca3e2d8d16a3db2e93ed9c8a9be8ff8205cdfe3bf823dca643ca51330a0951531121047396cc16d60ea620c48a51162f08e48bdd7c9d9f945084fec0c3ee187c62353cfaee3a7bc6deeedeba22ce26b40252539523a467f547dc69bcdfa098cc044907d1f68b8add453c32296a1a844e8a7ec64401a58235bb18ea6b8b193fc393252e21eae677d1885e9830c7944102606ed86b38dabb41658dc8a56f435b26f93cac23c92480fdabb858b355cb4ee724e7d6010fe4a4e0c1999e0518782fb07a330fc5612c7a700c4e0f14be32e75745ed7eaf9504fb3fcc0cafe58bac2e93c5d2e156385a3e5d72c0d1269ccc7d617c494c23b406ecae9ef5c687a33f60b724fc62b57d0637597be65e6c17d414e0874875f1ff6ad0d4e165ac2290609d5adf8d88beff71f4239f49ff797602446a3e746a876de39a86507055afda218cef2f45d14bd166ccb2ca2aacb7b5de9a211742204acfad2401059bffe5d65a56bf6c26ecac5dad4a6302eb572713223ed7381acf106961ea2812d07db1f3402807cb476966041a2fac234f434c31cbc2cfccf485b9e9b38bbcf7b6ef9bd82b54e3b907e3bad55910bbd47f0db2dc88be6c8ee98b41cf029f2866fdf86db2d741567b1cc9d097ec0b1a5d81d1f747a12134bf78c1a02ecd685da939c141384e99aad8d69bda6847de477a8e12a59bee1a56014ff4d20dda671ddfbbd29fa4e9ed1460ae16ea69faa679665d532ef921e8a4ad07cdc18ed64427ba2b8f4eeb7f5e8cf1855f25726e89bfb08ffaccaa2df1f9daf733f89f543ae39b6eca0424d3a949c7b7000e3000c2d45773a123dc2acf6ca0bbb842548881cb5462fe52c20e5736980964d7d254d2c0e13593bf3ee45cde1841e9b8991f09825fc5371932124137af77656e0d5eeff2495be3bc3c9daeeba4b8a49d5725957662e5ce36cfb1c31ec376325c61ae8695c02c6418d86e68d3e428728d46313689adbac24d32d188242fa4f80abd79cb2dafab37dff924d5a8f0211117bbd14817afd2c75387d605476905560127afbe72e7201e2d84173d66a79515022f6775bf51dfeb6101883d958a4526e0bce487f4acf4857eec6740e80e1e17aefa59fe3afe09f0c5a96ea4e880b8b55e17163f62bbd690f58353b65669f3b44ca66b4b3ce03c5b202287995242e036e138fcf037d4cf4897baecfa5c81f9f27e3d127a7d651b79161d8b2880b6cf497999e44a1f5c6264adcbff330ed0008c522d87ccfb2fc17194025658711c42c9f946e7d0c7fa4d7044183d667fe64c58949c3a6fea3e7b3968c670463965f04fbe69d0d449facd9249a2788e6ea221dbd4747a1c5c5551c326bfe8af4778ad87626ac6267a2e4d1e333b720b1ab2ce2de2164ec0e21a96a9f8b5f9f3c4cb682f72f3cdaf85a4772982a82c4c8a58563ea0aa28223cd99416e13acd59cbd877eb678170234628c91da38b2f9bab4bb76589fff59729c19ad0b0d167196b235f7c41d203a752b17cbe0fc26293f69b929a903a5821167e528a6e160539e7b5ca3a7cb53924b192fd40d8d4cc1ad928539b9a49da1b08618ed707ed503e32b4c239963999eea749ccc3a11c5c051d3e3a622c053db73cb2d65238e833e8da03effe172d1c1c15b865b2e28daaa9bc5da6efd75bf0b57ff3cc84b0fd66148dbb391f18d316ac3fb287d0cae730c3722c7b2c4f2394f16ed48a198a4c08e6094237d5a78cd87213539c8b3f06b947e8d95b6400754f7ee0232fc99428b5cf1e5a9eb042b0462df0cf61472d2cbad36197997847d3c9d186c89aac264631a8658b904d110ce50c6f63ff5fcfeeb590311f073b426b5da71fda1a417777385edce10bff54fee28c4366f4e1d0157500f7c00f39c7043fda0b786df216a77573ce83dc55e353e36fca37877c6b6d05005c0887e99d482eea4ea9ce007735d816071a5d81785cba83a1db73913f1ca4ce80487b0da646d1a051de40e0e4fd9d873bbc94b193eed29958ce5e4f17386812c926e9829dcd24e3ccde56314ebfaf857b1b2ca6b6f0141312b9040aef3d572e407a2f78c284771150f1ef12c7b50ec76a64110ef091c39e993011adf3e4ff32700b2fd46f98476e6fcd1a9c05dd4ea6d178c1980ca71e40557f094c0d5f01c4e7809ee326b3e9cd13a68000c4adc524691bb8661c0294f3b824cc9674faca493ae817880b890cceaa597664bcfd665f81cec41afdd35c599cbb8a856e825e8f7b34c43b3733bf56fccfe52a79da776b4ed42500e782babde66a784f666e658239a57a1da3afd85827389ef1763cadb6353fc9d41d15fe38dfc8e0517e230929963af2e39d44bcdc00ddfbb68f03afb807fbbcd6c9dcb24ee97ecec5640e5494ab58002aa9ce3ae71ed3f9199dd4df26a4425e1c169fa3776bbcd5fd5467aa5e197c51c34d633895329bea2506bb4727da78b74923da8d4862c0dbea6b1c4f4a9af4adaef9e270a7febbdfb791d7650db7df8f6eb7dcab6604851fc41672b8315bda49296f4f7463dca7114bd211192bda131b952c0b769ad8b837676180c6127978d434f7af9625e1ecafab07fabe731ecf6de7248cac7556403b444aa3633c5731b569f751a2e081ee1a6fe8f168224f90aa3d67ce64227e30e0f49aed27dc0b058e51817a24c73e9397245e9d1810893d53ff69c010a559f9e78361c4beb8f4f6fcda70c5b62a7019794b4747bb9dfeda53c1fbb8320defc4ad1d92fbf29bf7a7b74dfdf27abad9d575d6add0339a201817c8f1bbfad94fb31719c4af674f449026961225836fbe6f7c9812b22207da6d6b7f7d3b8ba150c7c0913ce9fc37f4d03c5783c1c81193fe7128fce4cdb1b486b5cd4ce622d275633dfde5df027578798e7df4408b5e033e722885452f9ccdd4df29ee2434b9613250c02dccb009753eb2391d771786b8e077195faf146af6f549c8aea35ca77fb53cd9fd4ff7ed0689ed3404fbfab975244884e17f72d9cb2efc0ae68bbe3754f08cdff7192ae911ca9f768bda27d5732274dd0134b2dc9e59c46988714bd6a1392f220a43a7aba7bd05ca1cbe775baf2b86bc93df7df0965be46eb37af5d4c56bb79eb02c29aca2731103a19b7646280feb8b5327abea48d984aa9603291a95aeb62daa7416e39fa02f63099f859dde03ed9392cca40e29d72bca889ec59875064c719790169c3504ef8d1c053315c3ed8f3802db75cd160ea99e479293fd63e2c53d980cae59703746888d1ebbf5663067f255a7ffb4347c514a8b31c416ad16f9f03514ff7dcd565d7820367b5e5888471d53ba0a19860bcb0df62ad980af576a48f80eb68369d59d96dbfa2941abadc26e757952612e6c7d4aff1d580ad77166939012ceaacf8142ae83197151e853e1450c57b5f4d68d1a15bfd66c00f88929d11f702edae3c08140507ca2bde991047fbfa5d250512459a73583a47793508833ff214f09a16d36e8408c8b5eb9b738b7dfe431929f47b2919d3a360f53fbdeee88ebad71f8e8b6f8fec9d72f53385d46cc0138d1739c51a343aee7504a0d170b653d459d5501e5a3c8ae39f2ec7cec2ab3f1d77b00223c3d424ee8f0d0edaad2436357f25b1940e1eb79156d2f7bb9702945076089e3fe4c5314c2424c7fd8b5889ea5f7254d4b2cc96b4b418c7bfdad28a283358310e676200ef202367bb43c78e6ad615391fe3be0493fb23d87f5f2f40f7f694b85a62fea9db06660ae20fa9492c320340158d295691c0ec7b29c10c6ac441558e60f4402f8cab4e7fc5f25896d50b8435f51499618cb38954b73e83134b949769c341bd42564816005a3fbdc2fa1079fb7875a05a5e16f2f30d08bb7f7c07ca30ace60a16539a1f615c9b969017d0137d360209ca8b15a0fca581adccffc948a8d88f33ed9692dd16cc8ffb53bd60281adfb8f2e59f02e581d8696faaddb3c6c21d5aeff37342381d7a470f6ba1f76c27fb4d205260c23243be9c22ae9027b3133cc9cd81dbcb95bf4642d44758bfee294273868806368592f6cb6868a86c60373d06020191171cef60cdac3ad0795105a529d06b6458bf12ec77d8e05af6993303e3ecc460d21cc8642f44a0a450e04f93f411b7a2fdfc8cd0d3ec62019ed9cc9173d35c0872a798d5923fdad31c308065a99cfb47e0528103361bf582e9a26816a314cf12a2eb8c7786a81dfc731ae77225ea4cd22ec92d566a392b96e9f21e832d2be14ca3acdb6df3a2b6b271c654e0d2490e465ce3e2cded510a1ef43377858f5379a27586c7c2522e2e54a56b940724fa1a73f5452e2680ed348d55a152730bf3a4c87428d4a8707839fa99c4681ebd34c5fa24f2b325813e7c49b4164494520b8c307a387e61cc6337bad140eec466fe7887549789b7376e9694d3ac69adf8940043c689b0ab8358ca115dd9e9f4e6ef2b996f498065d3d6a8703af022de72c4dbca60af1481d1cb8d0faf4858481a9a4e3c7ab43ebc4cab0e6d1f71481333c777aa8633f0fb6bcbe39a730102e0391ee233208653c9de656e0a8ab0c9a62fb982431b699f0a1ca380f1014daaabafe302344c6d955da63cb48cbb43654d29277aba572dbeb64802837757b59d26a73ce5106fb42d6f7fb0c9bca30e4702933a3106e5588692d71093b1ea5c5316c4a59af91303231c79a3b1ea8b6081d645f7e36d803a8c151b6e632e0beffd206dd0ca88fccaad775c3cfb732fd34237950577b72d8b8a4f7e510e15fd0a033ae2cf4cff28e1118a3a46297cb6de50ad5c8cac03110cd59a6d44232f4c910f7bfea5f6f713de40c4c40713d8d722c8df167a5ff6fddfa33b6d682981e58f20a5de89fc99abb807d1afa23b8061e60bb6f46cb830926ae6f6e05efbb6fb5e61add4419811bf9de8966f140207b52d1ffe8894e2b5857cee0a01c29291a221b58339e01520dad59ae763cce1e6e336920103ad2fc40c69e3508af12fa24674e37cc59139d84113f40b58a62e7cbbf398ad82cd14715412febd2e2782ea887781057f7cbcd5169bf81f511a0f349e7816b633abd4af67f4fe1eafab781d3e73e5102012f4b332e2c225d4df666ec680f0a4f2c9f92a12f3e0788e1cb52c3dd21a69bfe58f289de0a13d0f205d8eb6ec836eae87ea4e18070ed563e9582767f65b2ae2927ed027ea1834a2d38946f7d68864b872e8e056041af15782ec21e72802a3129b992e07b7cb8172924c8055f86c594e015acd62812ce3a946e464c59c969911114c4727f4686c4fc6637e2282dea45459901f35ea574772acda60d073ea2154c5577957f01138eced06315415d728afec618bf6cc22f0389d424d907b7a0b8181f7dd8fdc9db95eeb87c96ed7e1497546e8dcac9c26eec41a41a5fd0b6dbe8374201fc67c33f712a7586c494d11a1fe76792efd73522ea54f3b797e46ace86db1a8dc89b7706c6d65f2597109991f83c982e4d61407e8d6f35127aa48489e7df2d08502d76d890f6d33e634f5e91db05f26f04a96fc77ac28fc1d73d1fa01fcda41dedf371cc09a26221505121780ee8ef9ef27f8ee3f9b430b529b91338d546884f655711cfab4a3c30e4ff428eb4ed92ccbf93e1d93417baf3a3534d7aa1a1a183254155a302a0c5b6b1e65e45a49c0c57e3846574f70015bd8769f4978ee63436410dbd5c8fe224f8643b83335f93d070c914a2e11769e0b95188e148b19ac57825abb9b939a9a122d92d5eb8997a7834699971f78b50e5a44bbdcb396515afc2b5e54f08030decdaca56baed046f37dc5b3cce2a68f562372b5b142b7e4c87a644d0d3819ab090879f258c7846db25d70ffc1b02f4a4de47a8379f80c1e26ccdf3958f11990ba051142e232b567820fc19f8287d826b022fe8683540ef5dd576c3436c531b146b6d37e5c2146920b820f352a98a53016324d0af3002f5540351fd53f4ee44ed22a15269a12e6246c9f2375319c9f38c79e75ce08df2b1b4ddf787a4c20e7641d9068b6cf6a5929bd35bc39cf31064a69c9d413ee59004070ad85376d885fca3b5ed3e90bb045bf6526a63569edd7c2a75ec44db69c999c8c23c90f8eeae80a00e857b4ff1b3944696703c1a38b9817d26b88ebd5d5fd72a335d5b54a0997a2d7f359044074da30d3abfd2825374c21205715c87b192b4dd4b3880525dbfc1070ed6073c68113c599a95e4e880afe02b2260cdb856efca71a2dc8f084dc5d946932b75001d0bc67ec997f739bdc3d7bd043d4f94576bbdb47bd6d98501d495a452796ed2473a6f60400748ac1bf4201ee15da6feabb893ac898ebd814246e198e99b22918fa36996ee41292ebbe41f344789bc1042d3602c980bd0a27a8af956e8d9d33ae30a554d52c5dfdc5a9e9f4f47959a40fd8f8ce18e3652a835fc2d83323751ac8a0278de9ff925186ec5d0044243d5c11827648f627a019d134350b9710f9178b5cf90b1402c6107b04b6e82d3b0ba3ecb755c3235322daf12e5469222081ffdf247cb8436f71d5cdc960f1d693c37ad6889c958e006fe0079a89e051c81bc627e417c665c9dc0724d6ce735fa6865d68a42cbca269d12b57d280ef886026a60bae0f40b09823da1aeef827a4e6713d82a38c535a72dcc701211278bd96d334972ed887476c050ef0f1aa41968163057d3b6444fd87aa5ba952e6991e74487b8e1e1b6b35ff4f9abb4681d4febb4b06bc1cf4111ee5bf03a9d4eaed655e2715b3c127be466de7a157b4994e08a953f54af3a95670683f52d671ca983541546119b88512da1c12b1fd90ea6e7dbe577019906501320a8d9ea6609c1074de5234a02f3fe9a0023cc990bcbf9da3ca6c62eaa7c97990bb3e704b0b9af1a79c69b4e6fc4f3b9568d131b99abb3c586623a924f54ba078a1aec05128f89d6d61cbfdae37f60a85664b7a9374168fa677bb0977f58832d7cf5904aa6cd0fa1b558fec7836156b4f2d21cdeeb1c6296a9864a64f65616d558c622d8ac936315b801505ffc137891263abedccacb4d033df413343d39c74ffdf9c6d8821369c7fbb9bb145a46a858e46d4718134fa8cddbf9296594358e9c77f39dad2066a380ebd4e132da4aca6c835e311c9a85413a8102bfebe71bc0610713205b2d1c11171fe64ab9c6185c62db4e628fdd23a50669b4042a847e0c38d8bc068106975925a9fabccc94ed5bf7dc6faa4aac7f46a61a07289991a8215e17e53dac4846070d26f27d0531c22d4476ec82baf2b9034ebcb6a26a10df6b5bad31084cfbe894556966ee0e78c7ebaa2a303130643574041acf2557632810fa2ed52f6fcc09b314fb4a469e966f1f80c944dbf9c26352b279e4856ceebd40aa2533b46cfadcc0faf983587ce98bf33fbfdbe7210b72d5e1ed99368d2138dc8709c56e684df9d7eefe48ad5fc4b32176e354eeb0c688ef193b1bdc79c9c7a25d9e5269ded921e3e5f18dd3de8942f68d35dd5199313384b5de04fbf9c2b75f827c65e7048191dd30f73ec0717ebafd3f454d6c09ba78ce22</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>Science</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>交通流理论笔记Lecture2</title>
+    <url>/2020/06/30/%E4%BA%A4%E9%80%9A%E6%B5%81%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0Lecture2/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">You can contact me for a password</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="e35bc82c0a3f58ae83ea9ad21422294af28dc1825e390af8c7520336c6528f7c">3e083b4887c2f0d4d45fff13f7a36f0bf9edc8cc90e881c86b21c5c52986ba3102e7d985b95adee4c192309453cf9ef278c0dea61987799682fcd2d313bd0bbeffdca084ecb2f9f792d6291a04333ece982eee10602419ea66f1eb98cb3b6975c2250509d74d3808fc92a4402b7039b2390d03bae4dd394070821f7315889d07b660c579fb24506686fb5ef2bf7eeae6</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>Science</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微分方程数值方法讲座</title>
+    <url>/2020/06/24/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E6%96%B9%E6%B3%95%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">You can contact me for a password</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="52c96c2a64998c353628d8214957da6258bd6f75e9a716ef66ec062bd6de22fe">03356be1501e653ebcfaa2a06aa65fe8663bc6d8d4ac37b72fcf2bdfea3e15a4cd90f65bbfb3ea37b1c28fe1b7a224e740d5d01df9f3ea597e268d5f0abdcdafa6ab3554ef6104400f37d0d8c7745973049af02f09ccf3fc655a5ac0d23a0ebed9e82fcf97150b2bcb50db0f78564abbc3adfba900babdc1238df9d1ed62ae9da33d41e861b93d19ed31aad7bd3e60cfde05e675a80105d9ec27341b461015bd0cb82ea22830b4d8e2487aa9cd64fdfe43f893f88e677bbfd794b3b254492e4a17fdfdb0e4ff316a97f4f0059590fb1e089f5ea53a3cfbc4994d3e4ab763f7ad3a7f814454841aa242a1a6b07e5bb6a04795b432d7ed4ddc061b3bdd895806b07129ee9f5e10e817474cb5a3abdcece48ae57f97602a56a082506b8d89102c3134b4cd74c3dde237f43195ad002d1bd371e7ecd91e6a51e5b34f403c5eb881e7c726aca5580dd00af7d4a9b1b09dc83cab26bef5450548bba391ce60136de6587dc338ceb2745fa80610b8454f34a2c835bdf0161abda37f71f54f28e2b07bc66c0ec9ab3a6cafa669fdd6cdbaa6713aadd970df98788b2d5f2a3069052549027f4ad95cc161c0a02b927d518996eef5f750e57e98aee179eaacdd8784870e74b0bb6afea2810cf4e6485e2ce56d55b72092d2a795c8af3289f399986b50388bdc8974e81d90505cfc2648c9a05e09515c28e615c660976cf557293bb8669f66cf592c4bdb12e04924efd60e82c9192549722dca90f3e086cdcc527de1d820ee1f1fc36830a37ad5756b2c4a081b3fa2d6ef03f432f4463036b0adf66bd1cb9996f9a9982760b923af5fbc009ec9b48560a74c7dda77d877233ad8a3b8e7995ec52b3d42628611ee69326f8db6a06aaac623a4b6299b66c31915798d08ef38c937187aa84821feaf594132ddc0c16f71d9c6c24235ada281b56a66752ab6b4a181f85a07455b0ccdcfcfe3284a37a140ce3a4b66fb9be3ef0fcd841960ad17efeead13c1ed57451221f717d3fc7e2fd899c856fc1477a640cbd89c54ab6e1b372da949369c8c3027169aa43f8b2a4d3d68bcbb36dac6c109166b7b43c5b651b0232165dc879d3bffd156808b2b0141d5a276defcfce10e51a0dc2015985a1de05990203c4b25cdcfb141482638df5ac2261b583c24eb1d81d519fdd57a2f58d8f0c82cbfb911af9ee5bfc90b2aa41163c93824b5c6357fb4e4da4efe696a98cd1cad0c7df14a1e9a034afb0410c195d8202100535af4ff830b48560167be4368178dcba99255db925dcd38b7bb325b780d82f2dc9c47f5e70b09a677425b989accb5ba914934ad2effd93d750c11aa79a00a1925695a7e1d7c2511b20889741520b742d9f3f5237f50a8fd9930690f63681432f2d32eaa814b97b9879378e1c2ee9475529623e84d9af6fd6820831e39ceb8527e0c2c25c4b304d2c4b0489bc030c2354399788ba5079fee10f27e968cc7258214d60281ac150b2f51d5099b9a8af5dc575b3de5560ae3811fc221386e57ee6cbd9a84c01b9b8343e7b3e67924ed5a0ac8b3b789a45127bcd3bb513d0cc5743d3333d2a79b97629bcacde55e1eb7be84c7b1f360aa69f5523b92231f921fc06de97c1d73014e4941b12667f9a47d4de6e16c3eb65c53b006425b63b8388b519a670683a076b215891c1eaf03db59889dce550a5e3ea7baeabb2d9fe2355a7ca69bf48a2ff734ea0b69ffa3d533a22b68541b9d437d6d5f94390f8f4134512899079fcaddaaa1d44e217a478d7155a07023bbce41d9075c429b338147eb17174f77f0dcdfdc9d22f819c8e02a4be45259af981e8863522711846e4f12f4869a93539b1e65182592b5f887c8075e27aeb2478270b980d7f5f7cd9570d350a400b2ae6ec0d54b862fc5bf1fa43210a8cfc90770881c5f962020975825e8ad2c065118139f8f1e647e6705dc042ad8014d86fdf3a132a3345d89b3ca411af14b0e0d74281ab175eb1a6070b05af10cbf1c339de277f2f43931198e1f92480bb1a65be31955e18844f3403488c64fd744dbe58eed9fff9f3fba8d8ffcbe08c4432ea25c010500d55cca068029312455377d48345aef05c883744595168fd8742f8ad00557211ddf714f2aeb63ba55ae459bc28c8a38f05f287f596c3c02db1d2e040d93c103ff8ab6a123c378e0721849d12657a7961ee86fd6d46b466bd12fbc7cff7589b7b975135021d66fd45a5325c6c22e11cc69183b5fb4a4bc0785079e3668fc79d1c0f3eef76a207bd2d57e0eeba9d8255e8d55cad7c8f3805df2c44580a1686904a51cf668bbee3f96f93d9d2ad5f0e3dae6bfcc1ec1c7bdd4c4183b963d68202eaf28211944342a2643e6ca3d86c78ff6dac4c3b48159b2566f673c29fd95b610de001cb667d2d92485a64b7e182b2e463589094f98160e653a0e06366bfcc756a3229dfcf46cc56c798e0514b6a002e6c8a0c189de7a03b619d98797049f3c0bd45bbbf0f88a8ecc04a6697feda74e97d038b9884577ee8d1b5f9069570cac06d55abd984e9bbe23cdc347196e04b4cb1636df3475d15d221bd47bd6f61894f7a14d00cbb6e178e615e4536841a2cdce72ebaedefd2bc0a4984fe73282cd3c0c99c7ab7e6d2bda0e313d46c6838f9538bd4073a4bbb92ee3ffb950e2d2c99b137c8de21c899339c2f54836710f920fbb10bec6afe8ecfc07a32d44ead3aff9646f49f086ef4bd60738a273c0c0c96a78a75650e8f86ec766933a7ee547f0754e7f378b991edd695fc376cb99eb0d8fbc05c1c042c0d1c35b0c55944d27054b3edd71f35ed44d7480627964fc5dd4261b1b1721d618ddd0ce09f8b71be461ac75e7156a7fa4176c463e0c4ea5e6d5e0128fbd3abf2e0a47c3bbd9a8ad8f66d97e8abf6841cce60861b9ddfee627b30f8a46edef74c194848bf3ea5b210c832b4c168d2a76e9dc282e2d5074de576a40b9025aeff7c889a4f5b1a16725102670b82380f2e1666e32c3e5dce658692eeb326f6233e6d241004d6ae9ef2b32d1e22b5b1c4077d784e1876792b98ccb1d58f02d7a77438f0d46203e831a33d917f5e49151c1e8b9c4e11c9fb3ca8a012700e5c99a7067c637e3970097a59eaaa1f7bf17de7a8e34577f4dcd06784a543dd98a0f6069169dde7985be9ec6462f7783e996ef073129081c9baf2160f648b1e9c3c162cb38a39d15873ae2b557c8914a5d59584ca85b520ca6c2a36012adc2b6f6c2c414d9829844490159dbdab0014fa6e9098057c361c566452bcbfcfe4b1344a4f7e6be6e98a79b9e6512519d22dfe32f6702aebbf6857b0b33f9f85373e6a0f34324d8a64bf7d5673a35d79f1e532f71c4f6d47f60a46bc8341c56dcd97209546c3d519592a23b7317f5438ea790b4d5dd176a976ca999ef1b9694d461f5fbffeb4afd25d1e07e565ddbfd6f5d4e8c5a6e32a72ae1f030c2c65cecc1eeb505cdce52d13bf29780c04c5fed0de1c0971a4ab081af415c3fe6605797198f5b29807928fcbac2ae1e42b4985ee8fa104ff2096162b0ef23f1ac64620ef56993bb222f5eacb562c1d1a9fb8d6bc028a8da3dca1298f491e22174d03c2668f613fda9152b3a091d9ebc1bdceac8b014ee73ae3dfdee1f1dfe72cce9ce7002b087f519f6482627637e0daec5467ad2e251ef71e487039b60b293e309c1250648237d0f4d85e6b558796042e88bc379d93fec3451c5fbcc36b4c0fd23c521599843bd6ba2f00500cf82f12c471dc060da44059bc521c1731ea7993416d3059d8d04729a4513e8824926ece5f62cec84e94987f39fe9ddb45906537d9576d4fcc776d5744b5d9482a23c1ff885051a502ba7571950933a2de61d0d2c577c56fe1bb746a0a7c9f135453782940a7a4aa326523d07bda638af0536e08240be274ddef592f4f3618990cb51bc1e8258597a53da60ca0bce53b2f31311a2ce0a46ec18ce118a92f8044bdad0ab2d2bac38ce91ac97eba01976640015e5d1140323c2e9e8879c86207f8565c55e882759c86a6bee7bd28f0513bc0698e07c5cb4694b272c69fe4639d0c9618ff1a8ae0761d752eaccbc156e08104a29635c7b5c8b8e17ff14840a135cbbf3f9b2ad934a152f909459cdaea5635606003c9f6cec9d5be3d78ca420ca5f4a6297aec55aafc06d01ccc9c060b5da0635c3e6a242ed1f7b5e462222543ed167a26258db925530bf67bca7f70b5bc02887e3291ff4c846c51ef040458a1ea6b1b7f595f145e6a241d0e0695bfd34b3ff35cecad9fe10e70b38c0201d26d95034a9e334bc32fdb8aad8d1b9598d001597695797f39cb253e2fa62d07e1765c52ca2b45a30d3d71e45dfce07050d9877e70e2599252d1b92dcba206f260535fac1b9f80a71655cbdad1c9bc5ac3d7713e566c036c799e369a21b5174e8611d56809768a50b24de413c960f533d83ee6efc7c6a8e68c85ad33297a44465d6e8f89c8813736f0f30d4a371870dbf4bb58c1fb7502e089971e992b12d15aac78f2eed49c6361aa5da3f845eb77e557160ed612a89fb34a8568d783c4508720a0e2a5e5acbdbd892ce00a61ac875b96e65962a940e6f6a39da7cf09b3c6b5167c7f02a56641194cc7a9a4e2b0370195a6e4da9cf8a6e5ba4d9ed16c308deff2d7104d0b591300765dcfad09cd5128e2ece9bf6aadfd2a0be05c2e4910654ba049688cd7373c3d1df091a38b36465105d8f02db95de4f0a00817462a5370bd692464acd006088be574b272de2fa5759cfb26325a73f7595687a65b96780d2e55bd6f3d813ca9a3ead928699dd6c4fe289f45bc6f7e914bc79cc26afb4d3b93779e121d61a16b4e0cc1de0055d60804126aba4b18b66e27d6ea2d619dc2c0c441b8ce99049dc2d67fb34457d725be2b81db5d67c8d540610ce</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>Science</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MarkDown语法总结</title>
+    <url>/2020/06/14/MarkDown%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>markdown语法备忘录<br><a id="more"></a></p>
+<h1 id="区块元素"><a href="#区块元素" class="headerlink" title="区块元素"></a>区块元素</h1><h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><p>如果你要引用某一区块，你可以在每一行的行首插入一个 &gt;  例如：</p>
+<blockquote>
+<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
+</blockquote>
+<p>也可以只在引用区块每一个markdown段落的第一行的行首插入 &gt; ：</p>
+<blockquote>
+<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
+</blockquote>
+<p>markdown支持区块引用的嵌套：</p>
+<blockquote>
+<p>This is the first level of quoting.</p>
+<blockquote>
+<p>This is nested bl<br>Back to the first level.</p>
+</blockquote>
+</blockquote>
+<p>引用区块内可以含有其它markdown元素， 包括标题，列表和代码块：</p>
+<blockquote>
+<h2 id="This-is-a-header"><a href="#This-is-a-header" class="headerlink" title="This is a header."></a>This is a header.</h2><ol>
+<li>This is the first list item.</li>
+<li>This is the second list item.</li>
+</ol>
+<p>Here’s some example code:</p>
+<pre><code>return shell_exec(&quot;echo $input | $markdown_script&quot;);
+</code></pre></blockquote>
+<h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><p>markdown支持两种形式的链接：行内式和参考式。</p>
+<h2 id="行内式"><a href="#行内式" class="headerlink" title="行内式"></a>行内式</h2><p>行内式：<a href="URL “可选的链接的title属性”">链接文字</a>。 例如：</p>
+<p>This is <a href="http://example.com/" title="Title">an example</a> inline link.</p>
+<p><a href="http://example.net/" target="_blank" rel="noopener">This link</a> has no title attribute.</p>
+<h2 id="参考式"><a href="#参考式" class="headerlink" title="参考式"></a>参考式</h2><p>参考式：<a href="URL" title="可选的连接的title属性">链接文字</a>。然后， 在文档的任意一行，定义链接：</p>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>代码块由缩进的一行或连续多行组成。当翻译成html时，代码块前后会分别加上<code>&lt;pre&gt;&lt;code&gt;</code>和<code>&lt;/code&gt;&lt;/pre&gt;</code>标签。例如，下列markdown：</p>
+<p>This is a normal paragraph:</p>
+<pre><code>This is a code block.
+</code></pre><h2 id="行内代码块"><a href="#行内代码块" class="headerlink" title="行内代码块"></a>行内代码块</h2><p>Use the <code>printf()</code> function.</p>
+<h1 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h1><blockquote>
+<p>如果需要强调某些文字，可以使用 * 或 _ 包围它们。</p>
+</blockquote>
+<p><em>single asterisks</em></p>
+<p><em>single underscores</em></p>
+<p><strong>double asterisks</strong></p>
+<p><strong>double underscores</strong></p>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/27496282" target="_blank" rel="noopener">我的bilibili主页</a></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p><img src="https://images.wallpaperscraft.com/image/hologram_scheme_scifi_139294_3840x2160.jpg" alt="壁纸"></p>
+<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><ul>
+<li>无序列表项</li>
+</ul>
+<ul>
+<li>无序列表项</li>
+</ul>
+<ul>
+<li>无序列表项</li>
+</ul>
+<h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><ul>
+<li>无序列表项<ul>
+<li>第二层列表项</li>
+<li>第二层列表项</li>
+</ul>
+</li>
+<li>无序列表项</li>
+<li>无序列表项</li>
+</ul>
+<h2 id="有序列表数字标识"><a href="#有序列表数字标识" class="headerlink" title="有序列表数字标识"></a>有序列表数字标识</h2><ol>
+<li>有序列表项1</li>
+<li>有序列表项2</li>
+<li>有序列表项3</li>
+</ol>
+<h2 id="有序多级列表数字标识"><a href="#有序多级列表数字标识" class="headerlink" title="有序多级列表数字标识"></a>有序多级列表数字标识</h2><ol>
+<li>有序列表项1<ol>
+<li>有序列表项11</li>
+<li>有序列表项12</li>
+</ol>
+</li>
+<li>有序列表项3</li>
+</ol>
+<h1 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h1><hr>
+<hr>
+<hr>
+<hr>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1642632&auto=0&height=66"></iframe>]]></content>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+</search>
