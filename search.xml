@@ -4,9 +4,9 @@
     <title>LeetCode 118.杨辉三角</title>
     <url>/2020/09/06/LeetCode118/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p>
+<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
 <a id="more"></a>
 <p><img src="https://s1.ax1x.com/2020/09/06/wmJfmt.gif" alt="wmJfmt.gif"></p>
-<p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
 <p>示例:</p>
 <p>输入: 5</p>
 <p>输出:<br>&emsp;&emsp;&ensp;[1],<br>&emsp;&emsp;[1,1],<br>&emsp;&ensp;[1,2,1],<br>&emsp;[1,3,3,1],<br>&ensp;[1,4,6,4,1]</p>
@@ -435,8 +435,7 @@ d=\frac{1}{\left\| \omega \right\|}</script></blockquote>
   <entry>
     <title>研究方法归纳</title>
     <url>/2020/08/05/%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95%E5%BD%92%E7%BA%B3/</url>
-    <content><![CDATA[<p>蒙特卡罗方法<br><a id="more"></a></p>
-<h1 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h1><h2 id="提出"><a href="#提出" class="headerlink" title="提出"></a>提出</h2><p>蒙特卡罗方法于20世纪40年代美国在第二次世界大战中研制原子弹的“曼哈顿计划”计划的成员S.M.乌拉姆和J.冯·诺伊曼首先提出。数学家冯·诺伊曼用驰名世界的赌城—摩纳哥的Monte Carlo—来命名这种方法，为它蒙上了一层神秘色彩。在这之前，蒙特卡罗方法就已经存在。1777年，法国数学家布丰（Georges Louis Leclere de Buffon，1707—1788）提出用投针实验的方法求圆周率π。这被认为是蒙特卡罗方法的起源。</p>
+    <content><![CDATA[<h1 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h1><h2 id="提出"><a href="#提出" class="headerlink" title="提出"></a>提出</h2><p>蒙特卡罗方法于20世纪40年代美国在第二次世界大战中研制原子弹的“曼哈顿计划”计划的成员S.M.乌拉姆和J.冯·诺伊曼首先提出。数学家冯·诺伊曼用驰名世界的赌城—摩纳哥的Monte Carlo—来命名这种方法，为它蒙上了一层神秘色彩。在这之前，蒙特卡罗方法就已经存在。1777年，法国数学家布丰（Georges Louis Leclere de Buffon，1707—1788）提出用投针实验的方法求圆周率π。这被认为是蒙特卡罗方法的起源。<br><a id="more"></a></p>
 <h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>当所求解问题是某种随机事件出现的概率，或者是某个随机变量的期望值时，通过某种“实验”的方法，以这种事件出现的频率估计这一随机事件的概率，或者得到这个随机变量的某些数字特征，并将其作为问题的解。</p>
 <h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><p>蒙特卡罗方法的解题过程可以归结为三个主要步骤：构造或描述概率过程；实现从已知概率分布抽样；建立各种估计量。</p>
 <ul>
@@ -485,6 +484,9 @@ d=\frac{1}{\left\| \omega \right\|}</script></blockquote>
 <p>具体决定哪两个刚体分子相撞，是随机取一对分子，计算它们的相对速度，根据此值与最大相对速度的比值和随机取样比较的结果，来决定该对分子是否入选。碰撞后分子的速度根据特定分子模型的碰撞力学和随机取样决定。分子与壁面碰撞后的速度，则根据特定的反射模型和随机取样决定。</p>
 <p>对于运动分子的位置和速度的追踪和求矩可以得出气体的密度、温度、速度等一些感兴趣的宏观参量。而对于分子与壁面间的动量和能量交换的记录则给出阻力、举力和热交换系数等的数学期望值。</p>
 ]]></content>
+      <categories>
+        <category>学术</category>
+      </categories>
       <tags>
         <tag>Science</tag>
       </tags>
