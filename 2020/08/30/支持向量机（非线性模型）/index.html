@@ -14,24 +14,22 @@
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic|Menlo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="浙江大学机器学习课程笔记归纳">
+  <meta name="description" content="课程回顾SVM是最大化间隔(Margin)的分类算法 优化问题：训练样本">
 <meta property="og:type" content="article">
 <meta property="og:title" content="支持向量机（非线性模型）">
 <meta property="og:url" content="http://example.com/2020/08/30/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Shining XY">
-<meta property="og:description" content="浙江大学机器学习课程笔记归纳">
+<meta property="og:description" content="课程回顾SVM是最大化间隔(Margin)的分类算法 优化问题：训练样本">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/09/03/wPhKER.th.png">
 <meta property="article:published_time" content="2020-08-30T07:54:59.000Z">
-<meta property="article:modified_time" content="2020-09-07T14:48:33.757Z">
+<meta property="article:modified_time" content="2020-10-02T17:51:24.576Z">
 <meta property="article:author" content="Shining XY">
 <meta property="article:tag" content="Machine-Learning">
 <meta name="twitter:card" content="summary">
@@ -225,8 +223,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-07 22:48:33" itemprop="dateModified" datetime="2020-09-07T22:48:33+08:00">2020-09-07</time>
+                <time title="修改时间：2020-10-03 01:51:24" itemprop="dateModified" datetime="2020-10-03T01:51:24+08:00">2020-10-03</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
 
           
 
@@ -239,9 +246,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>浙江大学机器学习课程笔记归纳<br><a id="more"></a></p>
-<h1 id="课程回顾"><a href="#课程回顾" class="headerlink" title="课程回顾"></a>课程回顾</h1><p>SVM是最大化间隔(Margin)的分类算法</p>
-<p>优化问题：训练样本</p>
+        <h1 id="课程回顾"><a href="#课程回顾" class="headerlink" title="课程回顾"></a>课程回顾</h1><p>SVM是最大化间隔(Margin)的分类算法</p>
+<p>优化问题：训练样本<br><a id="more"></a></p>
 <script type="math/tex; mode=display">
 \left \{ \left ( x_i,y_i \right) \right \} _ {i=1 \sim N}</script><p>最小化：</p>
 <script type="math/tex; mode=display">
@@ -292,8 +298,8 @@ b^2\\
 a\\
 b\\
 ab\end{bmatrix}}
-\\
-则有：
+\\</script><p>则有：</p>
+<script type="math/tex; mode=display">
 \varphi(x_1)=\begin{bmatrix}
 0\\
 0\\
@@ -319,22 +325,22 @@ ab\end{bmatrix}}
 0\\
 1\\
 0\end{bmatrix}\in {\color{Orange}C_2}
-\\
-对于以上的\varphi(x_i)的值,需要给出\omega和b的值\\使限制条件{\color{RoyalBlue}y_i[\omega^T\varphi(x_i)+b]\ge1(i=1 \sim n)}成立\\
-可以设
+\\</script><p>对于以上的$\varphi(x_i)$的值,需要给出$\omega$和$b$的值，使限制条件${\color{RoyalBlue}y_i[\omega^T\varphi(x_i)+b]\ge1(i=1 \sim n)}$成立，<br>可以设：</p>
+<script type="math/tex; mode=display">
 \omega=\begin{bmatrix}
 -1\\
 -1\\
 -1\\
 -1\\
 6\end{bmatrix}
-b=1
-\\
-则：\\
-\omega^T\varphi(x_1)+b=1 \in C_1\\
-\omega^T\varphi(x_2)+b=3 \in C_1\\
-\omega^T\varphi(x_3)+b=-1 \in C_2\\
-\omega^T\varphi(x_4)+b=-1 \in C_2\\</script><pre><code>在特征空间里随机的选一些点，同时把所选的点随机的标上圆圈和叉，在越高维的特征空间里做这个操作，这些点被线性分开的概率越大。
+b=1</script><p>则：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&\omega^T\varphi(x_1)+b=1 \in C_1\\
+&\omega^T\varphi(x_2)+b=3 \in C_1\\
+&\omega^T\varphi(x_3)+b=-1 \in C_2\\
+&\omega^T\varphi(x_4)+b=-1 \in C_2\\
+\end{split}</script><pre><code>在特征空间里随机的选一些点，同时把所选的点随机的标上圆圈和叉，在越高维的特征空间里做这个操作，这些点被线性分开的概率越大。
 在无限维的特征空间里做这个操作，被线性分开的概率是1
 </code></pre><p>$\varphi(x)$可以是无限维，若$\varphi(x)$是无限维的情况下，$\omega^T$也是无限维的，则变得不可操作。</p>
 <h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>我们可以不知道无限维映射$\varphi(x)$的显式表达，我们只要知道一个核函数(Kernel Function)</p>
@@ -352,9 +358,7 @@ b=1
 K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
 <p>$d$是多项式阶数 上式的$\varphi(x)$是有限维度的</p>
 </blockquote>
-<h2 id="Mercer’s-Theorem"><a href="#Mercer’s-Theorem" class="headerlink" title="Mercer’s Theorem"></a>Mercer’s Theorem</h2><blockquote>
-<script type="math/tex; mode=display">
-泛函分析中的Mercer 定理：任何半正定的函数都可以作为核函数。\\所谓半正定的函数f(x_i,x_j)，是指拥有训练数据集合(x_1,x_2,...x_n) ，\\我们定义一个矩阵的元素 a_{ij} = f(x_i,x_j) ，这个矩阵式n*n的，如果这个矩阵是半正定的，\\那么f(x_i,x_j)就称为半正定的函数。这个Mercer定理是核函数必要条件.</script></blockquote>
+<h2 id="Mercer’s-Theorem"><a href="#Mercer’s-Theorem" class="headerlink" title="Mercer’s Theorem"></a>Mercer’s Theorem</h2><p>泛函分析中的$Mercer$定理：任何半正定的函数都可以作为核函数。所谓半正定的函数$f(x_i,x_j)$，是指拥有训练数据集合$(x_1,x_2,…x_n)$，我们定义一个矩阵的元素$a_{ij} = f(x_i,x_j)$，这个矩阵式$n*n$的，如果这个矩阵是半正定的，那么$f(x_i,x_j)$就称为半正定的函数。这个$Mercer$定理是核函数必要条件.</p>
 <p>$K(x_1,x_2)$能写成$\varphi(x_1)^T\varphi(x_2)$的充要条件：</p>
 <ul>
 <li><script type="math/tex; mode=display">K(x_1,x_2)=K(x_2,x_1)（交换性）</script></li>
@@ -368,7 +372,7 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
 </li>
 </ol>
 <h2 id="原问题-Prime-Problem"><a href="#原问题-Prime-Problem" class="headerlink" title="原问题 Prime Problem"></a>原问题 Prime Problem</h2><p><code>原问题非常普适</code></p>
-<p>最小化：<br>$f(\omega)$</p>
+<p>最小化：$f(\omega)$</p>
 <p>限制条件：$g_i(\omega)\le0(i=1 \sim K)$</p>
 <p>&emsp;&emsp;&emsp;$h_i(\omega)=0(i=1 \sim M)$</p>
 
@@ -531,7 +535,7 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -710,6 +714,61 @@ window.addEventListener('pjax:success', () => {
 
     <div id="pjax">
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

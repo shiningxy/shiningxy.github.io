@@ -9,7 +9,7 @@
 <p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p>
 <p>示例:</p>
 <p>输入: 5</p>
-<p>输出:<br>[\<br>&emsp;&emsp;&ensp;[1],\<br>&emsp;&emsp;[1,1],\<br>&emsp;&ensp;[1,2,1],\<br>&emsp;[1,3,3,1],\<br>&ensp;[1,4,6,4,1]\<br>]</p>
+<p>输出:<br>&emsp;&emsp;&ensp;[1],<br>&emsp;&emsp;[1,1],<br>&emsp;&ensp;[1,2,1],<br>&emsp;[1,3,3,1],<br>&ensp;[1,4,6,4,1]</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/pascals-triangle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/pascals-triangle</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><pre><code>class Solution{
   public List&lt;List&lt;Integer&gt;&gt; generate(int numRows){
@@ -85,7 +85,7 @@
 <li>时间复杂度：$O((n+m)log(n+m))$</li>
 <li>空间复杂度：$O(1)$</li>
 </ul>
-<h2 id="0x02-双指针-从前往后"><a href="#0x02-双指针-从前往后" class="headerlink" title="0x02 双指针/从前往后"></a>0x02 双指针/从前往后</h2><h3 id="直觉-1"><a href="#直觉-1" class="headerlink" title="直觉"></a>直觉</h3><p>一般而言，对于有序数组可以通过 <em>双指针法</em> 达到$O(n+m)$的时间复杂度。</p>
+<h2 id="0x02-双指针-从前往后"><a href="#0x02-双指针-从前往后" class="headerlink" title="0x02 双指针/从前往后"></a>0x02 双指针/从前往后</h2><h3 id="直觉-1"><a href="#直觉-1" class="headerlink" title="直觉"></a>直觉</h3><p>一般而言，对于有序数组可以通过 _双指针法_ 达到$O(n+m)$的时间复杂度。</p>
 <p>最直接的算法实现是将指针<code>p1</code>置为<code>nums1</code>的开头，<code>p2</code>为<code>nums2</code>的开头，在每一步将最小值放入输出数组中。</p>
 <p>由于<code>nums1</code>是用于输出的数组，需要将<code>nums1</code>中的前<code>m</code>个元素放在其他地方，也就需要$O(m)$的空间复杂度。</p>
 <p><img src="https://s1.ax1x.com/2020/09/06/wZMyvT.png" alt="wZMyvT.png"></p>
@@ -158,9 +158,8 @@
   <entry>
     <title>支持向量机（非线性模型）</title>
     <url>/2020/08/30/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%89/</url>
-    <content><![CDATA[<p>浙江大学机器学习课程笔记归纳<br><a id="more"></a></p>
-<h1 id="课程回顾"><a href="#课程回顾" class="headerlink" title="课程回顾"></a>课程回顾</h1><p>SVM是最大化间隔(Margin)的分类算法</p>
-<p>优化问题：训练样本</p>
+    <content><![CDATA[<h1 id="课程回顾"><a href="#课程回顾" class="headerlink" title="课程回顾"></a>课程回顾</h1><p>SVM是最大化间隔(Margin)的分类算法</p>
+<p>优化问题：训练样本<br><a id="more"></a></p>
 <script type="math/tex; mode=display">
 \left \{ \left ( x_i,y_i \right) \right \} _ {i=1 \sim N}</script><p>最小化：</p>
 <script type="math/tex; mode=display">
@@ -211,8 +210,8 @@ b^2\\
 a\\
 b\\
 ab\end{bmatrix}}
-\\
-则有：
+\\</script><p>则有：</p>
+<script type="math/tex; mode=display">
 \varphi(x_1)=\begin{bmatrix}
 0\\
 0\\
@@ -238,22 +237,22 @@ ab\end{bmatrix}}
 0\\
 1\\
 0\end{bmatrix}\in {\color{Orange}C_2}
-\\
-对于以上的\varphi(x_i)的值,需要给出\omega和b的值\\使限制条件{\color{RoyalBlue}y_i[\omega^T\varphi(x_i)+b]\ge1(i=1 \sim n)}成立\\
-可以设
+\\</script><p>对于以上的$\varphi(x_i)$的值,需要给出$\omega$和$b$的值，使限制条件${\color{RoyalBlue}y_i[\omega^T\varphi(x_i)+b]\ge1(i=1 \sim n)}$成立，<br>可以设：</p>
+<script type="math/tex; mode=display">
 \omega=\begin{bmatrix}
 -1\\
 -1\\
 -1\\
 -1\\
 6\end{bmatrix}
-b=1
-\\
-则：\\
-\omega^T\varphi(x_1)+b=1 \in C_1\\
-\omega^T\varphi(x_2)+b=3 \in C_1\\
-\omega^T\varphi(x_3)+b=-1 \in C_2\\
-\omega^T\varphi(x_4)+b=-1 \in C_2\\</script><pre><code>在特征空间里随机的选一些点，同时把所选的点随机的标上圆圈和叉，在越高维的特征空间里做这个操作，这些点被线性分开的概率越大。
+b=1</script><p>则：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+&\omega^T\varphi(x_1)+b=1 \in C_1\\
+&\omega^T\varphi(x_2)+b=3 \in C_1\\
+&\omega^T\varphi(x_3)+b=-1 \in C_2\\
+&\omega^T\varphi(x_4)+b=-1 \in C_2\\
+\end{split}</script><pre><code>在特征空间里随机的选一些点，同时把所选的点随机的标上圆圈和叉，在越高维的特征空间里做这个操作，这些点被线性分开的概率越大。
 在无限维的特征空间里做这个操作，被线性分开的概率是1
 </code></pre><p>$\varphi(x)$可以是无限维，若$\varphi(x)$是无限维的情况下，$\omega^T$也是无限维的，则变得不可操作。</p>
 <h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>我们可以不知道无限维映射$\varphi(x)$的显式表达，我们只要知道一个核函数(Kernel Function)</p>
@@ -271,9 +270,7 @@ b=1
 K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
 <p>$d$是多项式阶数 上式的$\varphi(x)$是有限维度的</p>
 </blockquote>
-<h2 id="Mercer’s-Theorem"><a href="#Mercer’s-Theorem" class="headerlink" title="Mercer’s Theorem"></a>Mercer’s Theorem</h2><blockquote>
-<script type="math/tex; mode=display">
-泛函分析中的Mercer 定理：任何半正定的函数都可以作为核函数。\\所谓半正定的函数f(x_i,x_j)，是指拥有训练数据集合(x_1,x_2,...x_n) ，\\我们定义一个矩阵的元素 a_{ij} = f(x_i,x_j) ，这个矩阵式n*n的，如果这个矩阵是半正定的，\\那么f(x_i,x_j)就称为半正定的函数。这个Mercer定理是核函数必要条件.</script></blockquote>
+<h2 id="Mercer’s-Theorem"><a href="#Mercer’s-Theorem" class="headerlink" title="Mercer’s Theorem"></a>Mercer’s Theorem</h2><p>泛函分析中的$Mercer$定理：任何半正定的函数都可以作为核函数。所谓半正定的函数$f(x_i,x_j)$，是指拥有训练数据集合$(x_1,x_2,…x_n)$，我们定义一个矩阵的元素$a_{ij} = f(x_i,x_j)$，这个矩阵式$n*n$的，如果这个矩阵是半正定的，那么$f(x_i,x_j)$就称为半正定的函数。这个$Mercer$定理是核函数必要条件.</p>
 <p>$K(x_1,x_2)$能写成$\varphi(x_1)^T\varphi(x_2)$的充要条件：</p>
 <ul>
 <li><script type="math/tex; mode=display">K(x_1,x_2)=K(x_2,x_1)（交换性）</script></li>
@@ -287,10 +284,13 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
 </li>
 </ol>
 <h2 id="原问题-Prime-Problem"><a href="#原问题-Prime-Problem" class="headerlink" title="原问题 Prime Problem"></a>原问题 Prime Problem</h2><p><code>原问题非常普适</code></p>
-<p>最小化：<br>$f(\omega)$</p>
+<p>最小化：$f(\omega)$</p>
 <p>限制条件：$g_i(\omega)\le0(i=1 \sim K)$</p>
 <p>&emsp;&emsp;&emsp;$h_i(\omega)=0(i=1 \sim M)$</p>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
       <tags>
         <tag>Machine-Learning</tag>
       </tags>
@@ -298,11 +298,8 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
   <entry>
     <title>支持向量机（线性模型）</title>
     <url>/2020/08/26/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%EF%BC%88%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%EF%BC%89/</url>
-    <content><![CDATA[<p>浙江大学 机器学习课程笔记归纳</p>
-<a id="more"></a>
-<h1 id="01-教科书介绍"><a href="#01-教科书介绍" class="headerlink" title="01 教科书介绍"></a>01 教科书介绍</h1><p>（1）机器学习，周志华，清华大学出版社，2016 （知识点全面，编程方面薄弱）</p>
-<p>（2）统计学习方法，李航，清华大学出版社，2012（数学推导丰富清楚）</p>
-<p>（3）Machine Learning in Action, P.Harrington,人民邮电出版社</p>
+    <content><![CDATA[<h1 id="01-教科书介绍"><a href="#01-教科书介绍" class="headerlink" title="01 教科书介绍"></a>01 教科书介绍</h1><p>（1）机器学习，周志华，清华大学出版社，2016 （知识点全面，编程方面薄弱）</p>
+<p>（2）统计学习方法，李航，清华大学出版社，2012（数学推导丰富清楚）<br><a id="more"></a><br>（3）Machine Learning in Action, P.Harrington,人民邮电出版社</p>
 <p>（4）Pattern Recognition and Machine Learning （模式识别与机器学习），Christopher M. Bishop, 2006</p>
 <p>（5） Machine Learning: A Probabilistic Perspective, K. P. Murphy,  （概率论角度讲述机器学习）</p>
 <p>（6）Machine Learning （机器学习）, Tom M. Mitchell, 机械工业出版社，2003年，（机器学习领域最早的一本教科书）</p>
@@ -346,7 +343,7 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
 <blockquote>
 <p><a href="https://imgchr.com/i/dWxwxU" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/08/26/dWxwxU.th.png" alt="dWxwxU.th.png"></a></p>
 <p>$d$:间隔(Margin)</p>
-<p><em>最大化间隔则能得到2号线</em></p>
+<p>_最大化间隔则能得到2号线_</p>
 <p>将平行线插到的向量叫支持向量(support vector)</p>
 <p>画出这条线，只跟支持向量有关，所以适合用在小样本的问题上。</p>
 </blockquote>
@@ -374,24 +371,22 @@ x_{1}=
  \omega_{1m}  \\
 \end{pmatrix}</script><p>机器学习过程：通过训练数据在模型的限定下把$\omega$和$b$求出来</p>
 </blockquote>
-<h2 id="线性可分数学定义"><a href="#线性可分数学定义" class="headerlink" title="线性可分数学定义"></a>线性可分数学定义</h2><p>一个训练集线性可分是指</p>
-<script type="math/tex; mode=display">
-\left \{ \left ( x_{i},y_{i} \right )  \right \} _{i=1\sim N} \\
-
-\exists \left ( \omega ,b \right )  ，使：对 \forall i=1\sim N 
-有：\\
-
-1. 若 y_i=+1 , 则 
-\omega^{T}x_{i}+b\ge 0 \\
-
-2. 若 y_i=-1 , 则
-\omega^{T}x_{i}+b<0</script><blockquote>
+<h2 id="线性可分数学定义"><a href="#线性可分数学定义" class="headerlink" title="线性可分数学定义"></a>线性可分数学定义</h2><p>一个训练集线性可分是指$\left \{ \left ( x_{i},y_{i} \right )  \right \} _{i=1\sim N}$<br>$\exists \left ( \omega ,b \right )$ ，使：对  $\forall i=1\sim N$有：</p>
+<ol>
+<li><p>若 $y_i=+1$ , 则<br>$\omega^{T}x_{i}+b\ge 0$ \\</p>
+</li>
+<li><p>若 $y_i=-1$ , 则<br>$\omega^{T}x_{i}+b&lt;0$</p>
+</li>
+</ol>
+<blockquote>
 <p>写成<br>$\omega^{T}x_{i}+b\le 0$</p>
 <p>$\omega^{T}x_{i}+b&gt;0$<br>也是完全一样的<br>$<br>\left ( \omega ,b \right ) = -\left ( \omega’ ,b’ \right )<br>$</p>
 </blockquote>
 <p>上述1.和2.在$y_{i}$取+1和-1的情况下可以简化合并为：</p>
 <script type="math/tex; mode=display">
-y_{i}[\omega^{T}x_{i}+b]\ge0 (公式1)</script><h2 id="支持向量机的优化问题："><a href="#支持向量机的优化问题：" class="headerlink" title="支持向量机的优化问题："></a>支持向量机的优化问题：</h2><p>  这里的优化问题是一个<a href="https://zhuanlan.zhihu.com/p/85408804" target="_blank" rel="noopener">凸优化</a>问题，其中的二次规划问题。</p>
+\begin{equation}
+y_{i}[\omega^{T}x_{i}+b]\ge0
+\end{equation}</script><h2 id="支持向量机的优化问题："><a href="#支持向量机的优化问题：" class="headerlink" title="支持向量机的优化问题："></a>支持向量机的优化问题：</h2><p>  这里的优化问题是一个<a href="https://zhuanlan.zhihu.com/p/85408804" target="_blank" rel="noopener">凸优化</a>问题，其中的二次规划问题。</p>
 <pre><code>二次规划问题(Quadratic Programming)：
 
  1. 目标函数(Objective Function)是二次项
@@ -411,7 +406,7 @@ y_{i}[\omega^{T}x_{i}+b]\ge0 (公式1)</script><h2 id="支持向量机的优化�
 <p>如果数据集线性不可分，所有的$\omega$和$b$都不可能满足限制条件(Subject to)</p>
 </blockquote>
 <p>事实1：$\omega^Tx+b=0$ 与 $a\omega^Tx+ab=0$是同一个平面。$a\in R^+$</p>
-<p>若$(\omega,b)$满足公式1，则$(a\omega,ab)$也满足公式1 (前提是$a$是一个正数，是负数的话公式久就倒了)</p>
+<p>若$(\omega,b)$满足公式1，则$(a\omega,ab)$也满足公式(1) (前提是$a$是一个正数，是负数的话公式久就倒了)</p>
 <p>事实2：点到平面距离公式，<br>平面：$\omega_1x+\omega_2y+b=0$，<br>则$(x_0,y_0)$到此平面的距离：</p>
 <script type="math/tex; mode=display">
 d=\frac{\left|\omega_1 x_0+\omega_2 y_0+b\right|}{\sqrt{\omega_1^2+\omega_2^2}}</script><p>向量$x_0$到超平面$\omega^Tx+b=0$的距离：</p>
@@ -430,6 +425,9 @@ d=\frac{1}{\left\| \omega \right\|}</script></blockquote>
 <p>支持向量机的理论推导 :  <a href="https://kdocs.cn/l/chTOq7Uj9qL1[金山文档" target="_blank" rel="noopener">https://kdocs.cn/l/chTOq7Uj9qL1[金山文档</a>] 1. 支持向量机的理论推导.pdf</p>
 </blockquote>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
       <tags>
         <tag>Machine-Learning</tag>
       </tags>
@@ -582,7 +580,7 @@ d=\frac{1}{\left\| \omega \right\|}</script></blockquote>
 <p>如果需要强调某些文字，可以使用 * 或 _ 包围它们。</p>
 </blockquote>
 <p><em>single asterisks</em></p>
-<p><em>single underscores</em></p>
+<p>_single underscores_</p>
 <p><strong>double asterisks</strong></p>
 <p><strong>double underscores</strong></p>
 <h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/27496282" target="_blank" rel="noopener">我的bilibili主页</a></p>
