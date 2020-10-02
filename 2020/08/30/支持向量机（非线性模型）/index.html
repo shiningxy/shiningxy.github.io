@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="课程回顾SVM是最大化间隔(Margin)的分类算法 优化问题：训练样本">
@@ -175,10 +175,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -509,7 +505,7 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
           站点概览
         </li>
       </ul>
-
+      
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#课程回顾"><span class="nav-number">1.</span> <span class="nav-text">课程回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM处理非线性"><span class="nav-number">2.</span> <span class="nav-text">SVM处理非线性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#最小化："><span class="nav-number">2.1.</span> <span class="nav-text">最小化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制条件："><span class="nav-number">2.2.</span> <span class="nav-text">限制条件：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#低维到高维映射"><span class="nav-number">3.</span> <span class="nav-text">低维到高维映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核函数"><span class="nav-number">4.</span> <span class="nav-text">核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯核函数"><span class="nav-number">4.1.</span> <span class="nav-text">高斯核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式核函数"><span class="nav-number">4.2.</span> <span class="nav-text">多项式核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mercer’s-Theorem"><span class="nav-number">4.3.</span> <span class="nav-text">Mercer’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原问题和对偶问题"><span class="nav-number">5.</span> <span class="nav-text">原问题和对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原问题-Prime-Problem"><span class="nav-number">5.1.</span> <span class="nav-text">原问题 Prime Problem</span></a></li></ol></li></ol></div>
@@ -574,6 +570,10 @@ K(x_1,x_2)=(x_1^Tx_2+1)^d=\varphi(x_1)^T\varphi(x_2)</script><blockquote>
   </div>
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
