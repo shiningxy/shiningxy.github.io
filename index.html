@@ -183,6 +183,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/03/%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%A4%A7%E9%87%8F%E7%9A%84if-else-switch-case/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Shining XY">
+      <meta itemprop="description" content="Shanghai Maritime University">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shining XY">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/03/%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%A4%A7%E9%87%8F%E7%9A%84if-else-switch-case/" class="post-title-link" itemprop="url">如何优化代码中大量的if/else,switch/case?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-03 15:42:48 / 修改时间：23:14:20" itemprop="dateCreated datePublished" datetime="2020-10-03T15:42:48+08:00">2020-10-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>代码中如果<font color="#FF0000">if/else</font>比较多，代码中存在的分支判断可能会越来越多，当里面涉及到的逻辑比较复杂或者分支数量实在是多的<font color="#FF0000">难以维护</font>的时候，我们就要考虑一下，有办法能让这些代码变得<font color="#FF0000">优雅</font>吗？本文将介绍优化if/else代码的八种方案。</p>
+<h1 id="优化方案1：提前return，去掉不必要的else"><a href="#优化方案1：提前return，去掉不必要的else" class="headerlink" title="优化方案1：提前return，去掉不必要的else"></a>优化方案1：提前return，去掉不必要的else</h1><p>如果 if/else 代码块包含 return 语句，可以考虑通过提前 return ，把多余的 else 干掉，使代码更加优雅。<br></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/03/%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%A4%A7%E9%87%8F%E7%9A%84if-else-switch-case/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/03/%E5%AD%A6%E6%9C%9F%E8%AE%A1%E5%88%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -206,10 +282,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-03 02:35:16 / 修改时间：03:09:04" itemprop="dateCreated datePublished" datetime="2020-10-03T02:35:16+08:00">2020-10-03</time>
+              <time title="创建时间：2020-10-03 02:35:16" itemprop="dateCreated datePublished" datetime="2020-10-03T02:35:16+08:00">2020-10-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-04 16:35:26" itemprop="dateModified" datetime="2020-10-04T16:35:26+08:00">2020-10-04</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -232,6 +314,575 @@
 
       
           <p><img src="/2020/10/03/%E5%AD%A6%E6%9C%9F%E8%AE%A1%E5%88%92/wallhaven-p8qpkm.jpg" alt="title"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>再入校园，仍是学生，合理规划，必不可少。</p>
+<p>按三个维度进行规划：</p>
+<ol>
+<li>学年</li>
+<li>科研进度</li>
+<li>论文撰写进度</li>
+</ol>
+<pre><code>    商船分支的研究生要积极参加导师组及企业科研实践活动
+    至少需满足《上海海事大学研究生学位授予成果要求》中规定的0.5学术分要求
+
+    交通运输学院和物流科学与工程研究院分支的研究生
+    必须完成一篇和学位论文内容相关
+    且达到北大核心期刊水平的学术论文
+
+    如没有发表或录用，学位论文送审时一并提供，由评阅专家签署相关意见。
+
+    学位论文要求：具体要求参见学校相关文件。
+    开题报告：通常情况下在第二学期末或第三学期初进行；
+    中期考核：通常情况下在第二学期末进行；
+    预答辩、答辩：通常情况下在第四学期进行。
+</code></pre><h1 id="学年"><a href="#学年" class="headerlink" title="学年"></a>学年</h1><h2 id="研一"><a href="#研一" class="headerlink" title="研一"></a>研一</h2><ol>
+<li>修满学分的同时把绩点提高，难课多花时间，多跑书店</li>
+<li>学习数学建模预备知识</li>
+<li>提高六级分数/考托福</li>
+<li>每天保持阅读文献并做笔记的习惯</li>
+<li>完成一篇综述</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>著作和期刊名称</th>
+<th>作者和出版单位</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>交通运输工程学</td>
+<td>沈志云</td>
+<td>人民交通出版社</td>
+</tr>
+<tr>
+<td>2</td>
+<td>国际集装箱运输业务</td>
+<td>吴永富、杨志刚</td>
+<td>人民交通出版社</td>
+</tr>
+<tr>
+<td>3</td>
+<td>国际集装箱运输手册</td>
+<td>刘鼎铭</td>
+<td>人民交通出版社</td>
+</tr>
+<tr>
+<td>4</td>
+<td>集装箱化</td>
+<td>集装箱化杂志</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>国际航运管理</td>
+<td>赵刚主编，大连海事大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>船舶管理实务</td>
+<td>雷海，海洋出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>船舶运输管理与经营</td>
+<td>谢新连，大连海事大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>运筹学</td>
+<td>钱颂迪，清华大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>运筹学</td>
+<td>胡运权，清华大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>运筹学ABC—成就、信息与能力</td>
+<td>李宗元，经济管理出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>管理运筹学</td>
+<td>韩伯棠，高等教育出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>物流管理（美）唐纳德J.鲍尔索克斯等</td>
+<td>林国龙等译，机械工业出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>自贸区背景下的供应链转型与创新丛书</td>
+<td>黄有方、严伟</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Ronald H. Ballou Business Logistics Management</td>
+<td>Prentice-Hall</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Applied Systems Analysis</td>
+<td>Richard de Neufville, Published by McGraw Hill</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>交通运输网络规划</td>
+<td>丁以中，大连海事大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>17</td>
+<td>交通运输系统决策理论方法与应用</td>
+<td>施欣，兰州大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>竞争战略</td>
+<td>Michael E. Porter、陈小悦译，华夏出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>19</td>
+<td>企业战略管理</td>
+<td>王方华、吕巍，复旦大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>港口装卸工艺</td>
+<td>宗蓓华、真虹编，人民交通出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>21</td>
+<td>国际集装箱多式联运实务、法规与案例</td>
+<td>杨志刚主编，人民交通出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>22</td>
+<td>企业物流管理—供应链的规划、组织和控制（美）罗纳德H.巴罗（Ronald H. Ballou）著</td>
+<td>王晓东、胡瑞娟等译，机械工业出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>23</td>
+<td>交通运输工程学报</td>
+<td>交通运输工程学报杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>综合运输</td>
+<td>综合运输杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>中国航海</td>
+<td>中国航海杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>26</td>
+<td>航海技术</td>
+<td>航海技术杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>27</td>
+<td>中国水运</td>
+<td>中国水运杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td>交通规划决策支持系统</td>
+<td>杨东援，同济大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>29</td>
+<td>道路交通工程系统分析方法</td>
+<td>王炜，东南大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>30</td>
+<td>城市道路与交通规划</td>
+<td>徐循初，中国建筑工业出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td>城市交通与道路系统规划</td>
+<td>文国玮，清华大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>32</td>
+<td>中国公路学报</td>
+<td>中国公路学报杂志社</td>
+<td></td>
+</tr>
+<tr>
+<td>33</td>
+<td>上海海事大学学报</td>
+<td>上海事大学</td>
+<td></td>
+</tr>
+<tr>
+<td>34</td>
+<td>大连海事大学学报</td>
+<td>大连海事大学</td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td>交通与计算机</td>
+<td>武汉交通科技大学</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td>移动通信</td>
+<td>信息产业部电子第七研究所</td>
+<td></td>
+</tr>
+<tr>
+<td>37</td>
+<td>船舶工程</td>
+<td>中国造船学会</td>
+<td></td>
+</tr>
+<tr>
+<td>38</td>
+<td>信号与图像处理</td>
+<td>Robert Libbey编写，电子工业出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>安全防范系统工程</td>
+<td>陈龙编著，清华大学出版社</td>
+<td></td>
+</tr>
+<tr>
+<td>40</td>
+<td>Introduction to Safety Science</td>
+<td>A. Kuhlmann.Spinger-Verlag,1986</td>
+<td></td>
+</tr>
+<tr>
+<td>41</td>
+<td>Fairplay The International Shipping Weekly</td>
+<td>Lombard House UK</td>
+<td></td>
+</tr>
+<tr>
+<td>42</td>
+<td>Software Engineering</td>
+<td>Institute of Electrical &amp; Electronics Engineers, Inc.</td>
+<td></td>
+</tr>
+<tr>
+<td>43</td>
+<td>Safety at Sea International</td>
+<td>DMG Word Media (UK) ltd.</td>
+<td></td>
+</tr>
+<tr>
+<td>44</td>
+<td>Journal of Visual Languages &amp; Computing</td>
+<td>Academic Press</td>
+<td></td>
+</tr>
+<tr>
+<td>45</td>
+<td>Transportation Research Part A/B/C/D/E/F</td>
+<td>Elsevier</td>
+<td></td>
+</tr>
+<tr>
+<td>46</td>
+<td>Journal of Marine Science and Technology</td>
+<td>Japan, Springer</td>
+<td></td>
+</tr>
+<tr>
+<td>47</td>
+<td>系统工程学报</td>
+<td>中国系统工程学会</td>
+<td></td>
+</tr>
+<tr>
+<td>48</td>
+<td>系统工程理论与实践</td>
+<td>中国系统工程学会</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>系统工程</td>
+<td>中国系统工程学会</td>
+<td></td>
+</tr>
+<tr>
+<td>50</td>
+<td>系统工程理论方法应用</td>
+<td>上海交通大学</td>
+<td></td>
+</tr>
+<tr>
+<td>51</td>
+<td>管理科学学报</td>
+<td>国家自然科学基金委</td>
+<td></td>
+</tr>
+<tr>
+<td>52</td>
+<td>管理工程学报</td>
+<td>浙江大学</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>Transportation Science</td>
+<td>Informs</td>
+<td></td>
+</tr>
+<tr>
+<td>54</td>
+<td>Computer-Aided Civil and Infrastructure Engineering</td>
+<td>Wiley</td>
+<td></td>
+</tr>
+<tr>
+<td>55</td>
+<td>Transportation Research Record</td>
+<td>SAGE</td>
+<td></td>
+</tr>
+<tr>
+<td>56</td>
+<td>IEEE Transactions on Intelligent Transportation Systems</td>
+<td>IEEE</td>
+<td></td>
+</tr>
+<tr>
+<td>57</td>
+<td>IET Intelligent Transport Systems</td>
+<td>IET</td>
+<td></td>
+</tr>
+<tr>
+<td>58</td>
+<td>Maritime Policy &amp; Management</td>
+<td>Taylor and Francis</td>
+<td></td>
+</tr>
+<tr>
+<td>59</td>
+<td>Transportation</td>
+<td>Springer</td>
+<td></td>
+</tr>
+<tr>
+<td>60</td>
+<td>International Symposium on Transportation and Traffic Theory</td>
+<td>国际会议</td>
+<td></td>
+</tr>
+<tr>
+<td>61</td>
+<td>Annual Meeting of Transportation Research Board</td>
+<td>国际会议</td>
+<td></td>
+</tr>
+<tr>
+<td>62</td>
+<td>博弈论与信息经济学</td>
+<td>张维迎</td>
+<td></td>
+</tr>
+<tr>
+<td>63</td>
+<td>工程伦理</td>
+<td>李正风</td>
+<td></td>
+</tr>
+<tr>
+<td>64</td>
+<td>供应链管理（第5版）</td>
+<td>马士华，林勇</td>
+<td></td>
+</tr>
+<tr>
+<td>65</td>
+<td>国际物流</td>
+<td>王爱虎</td>
+<td></td>
+</tr>
+<tr>
+<td>66</td>
+<td>机器学习</td>
+<td>周志华</td>
+<td></td>
+</tr>
+<tr>
+<td>67</td>
+<td>交通规划</td>
+<td>王炜，陈学武</td>
+<td></td>
+</tr>
+<tr>
+<td>68</td>
+<td>交通规划理论与方法</td>
+<td>陆化普</td>
+<td></td>
+</tr>
+<tr>
+<td>69</td>
+<td>交通运输系统分析</td>
+<td>张国伍</td>
+<td></td>
+</tr>
+<tr>
+<td>70</td>
+<td>决策理论与方法</td>
+<td>郭立夫</td>
+<td></td>
+</tr>
+<tr>
+<td>71</td>
+<td>库存控制与管理</td>
+<td>英沃尔特斯Waters，D.</td>
+<td></td>
+</tr>
+<tr>
+<td>72</td>
+<td>冷链物流</td>
+<td>白世贞，曲志华</td>
+<td></td>
+</tr>
+<tr>
+<td>73</td>
+<td>人工智能：一种现代的方法</td>
+<td>拉塞尔，诺维格</td>
+<td></td>
+</tr>
+<tr>
+<td>74</td>
+<td>数据挖掘概念与技术</td>
+<td>Jiawei Han</td>
+<td></td>
+</tr>
+<tr>
+<td>75</td>
+<td>数学建模</td>
+<td>姜启源</td>
+<td></td>
+</tr>
+<tr>
+<td>76</td>
+<td>统计学</td>
+<td>贾俊平</td>
+<td></td>
+</tr>
+<tr>
+<td>77</td>
+<td>统计学习方法</td>
+<td>李航</td>
+<td></td>
+</tr>
+<tr>
+<td>78</td>
+<td>物联网系统设计</td>
+<td>桂劲松</td>
+<td></td>
+</tr>
+<tr>
+<td>79</td>
+<td>物流成本管理与控制</td>
+<td>鲍新中</td>
+<td></td>
+</tr>
+<tr>
+<td>80</td>
+<td>物流经济地理</td>
+<td>王智利</td>
+<td></td>
+</tr>
+<tr>
+<td>81</td>
+<td>物流企业管理</td>
+<td>刘丹</td>
+<td></td>
+</tr>
+<tr>
+<td>82</td>
+<td>物流系统论</td>
+<td>何明珂</td>
+<td></td>
+</tr>
+<tr>
+<td>83</td>
+<td>物流项目管理</td>
+<td>张旭辉</td>
+<td></td>
+</tr>
+<tr>
+<td>84</td>
+<td>物流信息系统</td>
+<td>黄有方</td>
+<td></td>
+</tr>
+<tr>
+<td>85</td>
+<td>应用统计学</td>
+<td>卢治飞，孙忠宝</td>
+<td></td>
+</tr>
+<tr>
+<td>86</td>
+<td>运输管理</td>
+<td>爱德华J.巴蒂</td>
+<td></td>
+</tr>
+<tr>
+<td>87</td>
+<td>Designing And Managing The Supply Chain，concepts, Strategies, And Case Studies, 2008</td>
+<td>The Mcgraw-hill Companies, Inc.</td>
+<td></td>
+</tr>
+<tr>
+<td>88</td>
+<td>Supply chain management and advanced planning: concept, method, software and case studies, 2005</td>
+<td>Springer Berlin</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 
       
     </div>
@@ -874,78 +1525,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/24/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E6%96%B9%E6%B3%95%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Shining XY">
-      <meta itemprop="description" content="Shanghai Maritime University">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shining XY">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/24/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E6%96%B9%E6%B3%95%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">微分方程数值方法讲座</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-24 14:17:51" itemprop="dateCreated datePublished" datetime="2020-06-24T14:17:51+08:00">2020-06-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-03 02:29:40" itemprop="dateModified" datetime="2020-10-03T02:29:40+08:00">2020-10-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          基于高精度技术的自适应有限元方法前沿讲座笔记
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/24/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E6%96%B9%E6%B3%95%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1017,20 +1596,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
