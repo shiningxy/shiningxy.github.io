@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言代码中如果if&#x2F;else比较多，代码中存在的分支判断可能会越来越多，当里面涉及到的逻辑比较复杂或者分支数量实在是多的难以维护的时候，我们就要考虑一下，有办法能让这些代码变得优雅吗？本文将介绍优化if&#x2F;else代码的八种方案。 优化方案1：提前return，去掉不必要的else如果 if&#x2F;else 代码块包含 return 语句，可以考虑通过提前 return ，把多余的 else 干掉，使代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-03T07:42:48.000Z">
-<meta property="article:modified_time" content="2020-10-03T15:14:20.491Z">
+<meta property="article:modified_time" content="2020-10-30T07:50:49.437Z">
 <meta property="article:author" content="Shining XY">
 <meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
@@ -209,10 +209,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-03 15:42:48 / 修改时间：23:14:20" itemprop="dateCreated datePublished" datetime="2020-10-03T15:42:48+08:00">2020-10-03</time>
+              <time title="创建时间：2020-10-03 15:42:48" itemprop="dateCreated datePublished" datetime="2020-10-03T15:42:48+08:00">2020-10-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-30 15:50:49" itemprop="dateModified" datetime="2020-10-30T15:50:49+08:00">2020-10-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
