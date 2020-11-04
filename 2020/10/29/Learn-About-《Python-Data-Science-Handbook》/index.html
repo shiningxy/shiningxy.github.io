@@ -27,12 +27,14 @@
 <meta property="og:site_name" content="Shining XY">
 <meta property="og:description" content="Learning…… 后续放出数据处理实例">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/11/04/BgN8v8.png">
 <meta property="article:published_time" content="2020-10-29T01:25:04.000Z">
-<meta property="article:modified_time" content="2020-11-01T07:59:43.772Z">
+<meta property="article:modified_time" content="2020-11-04T12:30:53.346Z">
 <meta property="article:author" content="Shining XY">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/11/04/BgN8v8.png">
 
 <link rel="canonical" href="http://example.com/2020/10/29/Learn-About-%E3%80%8APython-Data-Science-Handbook%E3%80%8B/">
 
@@ -218,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-01 15:59:43" itemprop="dateModified" datetime="2020-11-01T15:59:43+08:00">2020-11-01</time>
+                <time title="修改时间：2020-11-04 20:30:53" itemprop="dateModified" datetime="2020-11-04T20:30:53+08:00">2020-11-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,6 +249,36 @@
       
         <p>Learning……</p>
 <p>后续放出数据处理实例</p>
+<a id="more"></a>
+<h1 id="In-Depth-Support-Vector-Machines"><a href="#In-Depth-Support-Vector-Machines" class="headerlink" title="In-Depth:Support Vector Machines"></a>In-Depth:Support Vector Machines</h1><p>操作在IPython环境下中执行，编译器为Jupyter Notebook(Anaconda3)</p>
+<h2 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h2><p>Support vector machines (SVMs) are a particularly powerful and flexible class of supervised algorithms for both classification and regression. In this section, we will develop the intuition behind support vector machines and their use in classification problems.</p>
+<p>We begin with the standard imports:<br>我们从标准化引入开始：</p>
+<p>$In [1]:$</p>
+<pre><code>%matplotlib inline
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# use seaborn plotting defaults
+import seaborn as sns; sns.set()
+</code></pre><h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h2><p>As part of our disussion of Bayesian classification (see In Depth: Naive Bayes Classification), we learned a simple model describing the distribution of each underlying class, and used these generative models to probabilistically determine labels for new points. That was an example of generative classification; here we will consider instead discriminative classification: rather than modeling each class, we simply find a line or curve (in two dimensions) or manifold (in multiple dimensions) that divides the classes from each other.</p>
+<p>As an example of this, consider the simple case of a classification task, in which the two classes of points are well separated:<br>例如，考虑分类任务的简单情况，其中两类点被很好地分开：</p>
+<p>$In [2]:$</p>
+<pre><code>from sklearn.datasets.samples_generator import make_blobs
+X, y = make_blobs(n_samples=50, centers=2,random_state=0, cluster_std=0.60)
+plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap=&#39;autumn&#39;);
+</code></pre><p><a href="https://imgchr.com/i/BgN8v8" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/11/04/BgN8v8.png" alt="BgN8v8.png"></a></p>
+<p>此处会报Warning:</p>
+<pre><code>D:\Anaconda3\lib\site-packages\sklearn\utils\deprecation.py:143: FutureWarning: The sklearn.datasets.samples_generator module is deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.datasets. Anything that cannot be imported from sklearn.datasets is now part of the private API.
+warnings.warn(message, FutureWarning)
+</code></pre><p>原因：</p>
+<pre><code>sklearn.datasets.samples_generator模块在0.22版本中已弃用，在0.24版本中已删除。
+应用sklearn.datasets导入相应的类/函数
+</code></pre><p>解决方案：</p>
+<pre><code>from sklearn.datasets.samples_generator import make_blobs
+</code></pre><p>修改为：</p>
+<pre><code>from sklearn.datasets import make_blobs
+</code></pre><p>$$</p>
 
     </div>
 
@@ -385,6 +417,7 @@
       
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#In-Depth-Support-Vector-Machines"><span class="nav-text">In-Depth:Support Vector Machines</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00"><span class="nav-text">0x00</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01"><span class="nav-text">0x01</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
