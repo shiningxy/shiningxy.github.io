@@ -40,7 +40,8 @@
 <li><strong>进行指定标签的定位</strong></li>
 <li><strong>标签或者标签对应的属性中存储的数据值进行提取（解析）</strong></li>
 </ul>
-<h1 id="正则解析"><a href="#正则解析" class="headerlink" title="正则解析"></a>正则解析</h1><pre><code>&lt;div class=&quot;thumb&quot;&gt;
+<h1 id="正则解析"><a href="#正则解析" class="headerlink" title="正则解析"></a>正则解析</h1><p>糗图百科网站中选取某一图片，发现class为thumb的是图片，选取其中一段源代码如下：</p>
+<pre><code>&lt;div class=&quot;thumb&quot;&gt;
 
 &lt;a href=&quot;/article/121721100&quot; target=&quot;_blank&quot;&gt;
 &lt;img src=&quot;//pic.qiushibaike.com/system/pictures/12172/121721100/medium/DNXDX9TZ8SDU6OK2.jpg&quot; alt=&quot;指引我有前进的方向&quot;&gt;
