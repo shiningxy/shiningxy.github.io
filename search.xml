@@ -18,7 +18,7 @@
 <li>获取响应数据</li>
 <li>持久化存储</li>
 </ul>
-<p>环境安装：<br>    pip install requests</p>
+<p>环境安装：<br>    <code>pip install requests</code></p>
 <p>实战编码：</p>
 <pre><code>- 需求：爬取搜狗首页的页面数据
 </code></pre><h1 id="聚焦爬虫"><a href="#聚焦爬虫" class="headerlink" title="聚焦爬虫"></a>聚焦爬虫</h1><p>爬取页面中指定的页面内容。</p>
@@ -40,16 +40,17 @@
 <li><strong>进行指定标签的定位</strong></li>
 <li><strong>标签或者标签对应的属性中存储的数据值进行提取（解析）</strong></li>
 </ul>
-<h1 id="正则解析"><a href="#正则解析" class="headerlink" title="正则解析"></a>正则解析</h1><div class="thumb">
+<h1 id="正则解析"><a href="#正则解析" class="headerlink" title="正则解析"></a>正则解析</h1><pre><code>&lt;div class=&quot;thumb&quot;&gt;
 
-<a href="/article/121721100" target="_blank">
-<img src="//pic.qiushibaike.com/system/pictures/12172/121721100/medium/DNXDX9TZ8SDU6OK2.jpg" alt="指引我有前进的方向">
-</a>
+&lt;a href=&quot;/article/121721100&quot; target=&quot;_blank&quot;&gt;
+&lt;img src=&quot;//pic.qiushibaike.com/system/pictures/12172/121721100/medium/DNXDX9TZ8SDU6OK2.jpg&quot; alt=&quot;指引我有前进的方向&quot;&gt;
+&lt;/a&gt;
 
-</div>
-
-<p>ex = ‘<div class="thumb">.*?<img src="/2021/01/15/Python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/(.*?)" alt.*?< div>‘</div></p>
-<h1 id="实战：爬取糗事百科图片"><a href="#实战：爬取糗事百科图片" class="headerlink" title="实战：爬取糗事百科图片"></a>实战：爬取糗事百科图片</h1><pre><code># -*- coding:utf-8 -*- #
+&lt;/div&gt;
+</code></pre><hr>
+<p>使用正则表达式方法聚焦爬取糗图百科中的图片</p>
+<pre><code>ex = &#39;&lt;div class=&quot;thumb&quot;&gt;.*?&lt;img src=&quot;(.*?)&quot; alt.*?&lt;/div&gt;&#39;
+</code></pre><h1 id="实战：爬取糗事百科图片"><a href="#实战：爬取糗事百科图片" class="headerlink" title="实战：爬取糗事百科图片"></a>实战：爬取糗事百科图片</h1><pre><code># -*- coding:utf-8 -*- #
 import requests
 import re
 import os
@@ -94,49 +95,59 @@ if __name__ == &quot;__main__&quot;:
 <li>2.通过调用BeautifulSoup对象中相关的属性或者方法进行标签定位和数据提取</li>
 </ul>
 </li>
-<li>环境安装：<ul>
-<li>pip install bs4</li>
-<li>pip install lxml</li>
-</ul>
-</li>
-<li>如何实例化BeautifulSoup对象：<ul>
-<li>from bs4 import BeautifulSoup</li>
-<li>对象的实例化：<ul>
-<li>1.将本地的html文档中的数据加载到该对象中<pre><code>  fp = open(&#39;./test.html&#39;,&#39;r&#39;,encoding=&#39;utf-8&#39;)
+<li><p>环境安装：</p>
+<pre><code>  pip install bs
+
+  pip install lxml
+</code></pre></li>
+<li><p>如何实例化BeautifulSoup对象：</p>
+<pre><code>  from bs4 import BeautifulSoup
+</code></pre><ul>
+<li><p>对象的实例化：</p>
+<ul>
+<li><p>1.将本地的html文档中的数据加载到该对象中</p>
+<pre><code>  fp = open(&#39;./test.html&#39;,&#39;r&#39;,encoding=&#39;utf-8&#39;)
+
   soup = BeautifulSoup(fp,&#39;lxml&#39;)
 </code></pre></li>
-<li>2.将互联网上获取的页面源码加载到该对象中<pre><code>  page_text = response.text
+<li><p>2.将互联网上获取的页面源码加载到该对象中</p>
+<pre><code>  page_text = response.text
+
   soup = BeatifulSoup(page_text,&#39;lxml&#39;)
 </code></pre></li>
 </ul>
 </li>
-<li>提供的用于数据解析的方法和属性：<ul>
-<li>soup.tagName:返回的是文档中第一次出现的tagName对应的标签</li>
-<li>soup.find():<ul>
-<li>find(‘tagName’):等同于soup.div</li>
-<li>属性定位：<br>  -soup.find(‘div’,class_/id/attr=’song’)</li>
+<li><p>提供的用于数据解析的方法和属性：</p>
+<ul>
+<li><code>soup.tagName</code>:返回的是文档中第一次出现的tagName对应的标签</li>
+<li><code>soup.find()</code>:<ul>
+<li><code>find(&#39;tagName&#39;)</code>:等同于soup.div</li>
+<li>属性定位：<ul>
+<li><code>soup.find(&#39;div&#39;,class_/id/attr=&#39;song&#39;)</code></li>
 </ul>
 </li>
-<li>soup.find_all(‘tagName’):返回符合要求的所有标签（列表）</li>
+</ul>
+</li>
+<li><code>soup.find_all(&#39;tagName&#39;)</code>:返回符合要求的所有标签（列表）</li>
 </ul>
 </li>
 <li>select：<ul>
-<li>select(‘某种选择器（id，class，标签…选择器）’),返回的是一个列表。</li>
+<li><code>select</code>(‘某种选择器（id，class，标签…选择器）’),返回的是一个列表。</li>
 <li>层级选择器：<ul>
-<li>soup.select(‘.tang &gt; ul &gt; li &gt; a’)：&gt;表示的是一个层级</li>
-<li>oup.select(‘.tang &gt; ul a’)：空格表示的多个层级</li>
+<li><code>soup.select(&#39;.tang &gt; ul &gt; li &gt; a&#39;)</code>：&gt;表示的是一个层级</li>
+<li><code>oup.select(&#39;.tang &gt; ul a&#39;)</code>：空格表示的多个层级</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>获取标签之间的文本数据：<ul>
-<li>soup.a.text/string/get_text()</li>
-<li>text/get_text():可以获取某一个标签中所有的文本内容</li>
-<li>string：只可以获取该标签下面直系的文本内容</li>
+<li><code>soup.a.text/string/get_text()</code></li>
+<li><code>text</code>/<code>get_text()</code>:可以获取某一个标签中所有的文本内容</li>
+<li><code>string</code>：只可以获取该标签下面直系的文本内容</li>
 </ul>
 </li>
 <li>获取标签中属性值：<ul>
-<li>soup.a[‘href’]</li>
+<li><code>soup.a[&#39;href&#39;]</code></li>
 </ul>
 </li>
 </ul>
@@ -149,14 +160,19 @@ if __name__ == &quot;__main__&quot;:
 <li>2.调用etree对象中的xpath方法结合着xpath表达式实现标签的定位和内容的捕获。</li>
 </ul>
 </li>
-<li>环境的安装：<ul>
-<li>pip install lxml</li>
-</ul>
-</li>
-<li>如何实例化一个etree对象:from lxml import etree<ul>
-<li>1.将本地的html文档中的源码数据加载到etree对象中：<br>  etree.parse(filePath)</li>
-<li>2.可以将从互联网上获取的源码数据加载到该对象中<br>  etree.HTML(‘page_text’)</li>
-<li>xpath(‘xpath表达式’)</li>
+<li><p>环境的安装：</p>
+<pre><code>  pip install lxml
+</code></pre></li>
+<li><p>如何实例化一个etree对象:from lxml import etree</p>
+<ul>
+<li><p>1.将本地的html文档中的源码数据加载到etree对象中：</p>
+<pre><code>  etree.parse(filePath)
+</code></pre></li>
+<li><p>2.可以将从互联网上获取的源码数据加载到该对象中</p>
+<pre><code>  etree.HTML(&#39;page_text&#39;)
+
+  xpath(&#39;xpath表达式&#39;)
+</code></pre></li>
 </ul>
 </li>
 <li>xpath表达式:<ul>
