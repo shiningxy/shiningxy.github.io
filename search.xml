@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Python爬虫xpath笔记</title>
-    <url>/2020/12/28/Python%E7%88%AC%E8%99%ABxpath%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h1><h2 id="聚焦爬虫"><a href="#聚焦爬虫" class="headerlink" title="聚焦爬虫"></a>聚焦爬虫</h2><p>爬取页面中指定的页面内容。</p>
+    <title>Python爬虫笔记</title>
+    <url>/2021/01/15/Python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="requests模块"><a href="#requests模块" class="headerlink" title="requests模块"></a>requests模块</h1><ul>
+<li>urllib模块</li>
+<li>requests模块</li>
+</ul>
+<p>requests模块：python中原生的一款基于网络请求的模块，功能非常强大，简单便捷，效率极高。<br>作用：模拟浏览器发请求。<br><a id="more"></a><br>如何使用：（requests模块的编码流程）</p>
+<ul>
+<li>指定url<ul>
+<li>UA伪装</li>
+<li>请求参数的处理</li>
+</ul>
+</li>
+<li>发起请求</li>
+<li>获取响应数据</li>
+<li>持久化存储</li>
+</ul>
+<p>环境安装：<br>    pip install requests</p>
+<p>实战编码：</p>
+<pre><code>- 需求：爬取搜狗首页的页面数据
+</code></pre><h1 id="聚焦爬虫"><a href="#聚焦爬虫" class="headerlink" title="聚焦爬虫"></a>聚焦爬虫</h1><p>爬取页面中指定的页面内容。</p>
 <p>编码流程：</p>
 <ul>
 <li>指定url</li>
@@ -19,9 +37,18 @@
 </ul>
 <h2 id="数据解析原理概述"><a href="#数据解析原理概述" class="headerlink" title="数据解析原理概述"></a>数据解析原理概述</h2><ul>
 <li>解析的局部的文本内容都会在标签之间或者标签对应的属性中进行存储</li>
-<li>进行指定标签的定位</li>
-<li>标签或者标签对应的属性中存储的数据值进行提取（解析）</li>
+<li><strong>进行指定标签的定位</strong></li>
+<li><strong>标签或者标签对应的属性中存储的数据值进行提取（解析）</strong></li>
 </ul>
+<h1 id="正则解析"><a href="#正则解析" class="headerlink" title="正则解析"></a>正则解析</h1><div class="thumb">
+
+<a href="/article/121721100" target="_blank">
+<img src="//pic.qiushibaike.com/system/pictures/12172/121721100/medium/DNXDX9TZ8SDU6OK2.jpg" alt="指引我有前进的方向">
+</a>
+
+</div>
+
+<p>ex = ‘<div class="thumb">.*?<img src="/2021/01/15/Python%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/(.*?)" alt.*?< div>‘</div></p>
 <h1 id="实战：爬取糗事百科图片"><a href="#实战：爬取糗事百科图片" class="headerlink" title="实战：爬取糗事百科图片"></a>实战：爬取糗事百科图片</h1><pre><code># -*- coding:utf-8 -*- #
 import requests
 import re
@@ -37,7 +64,7 @@ if __name__ == &quot;__main__&quot;:
         &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36&#39;
     }
     # 获取热图标签下 所有页码内的图片 （实际观察有13个页码）
-    for page_num in range(1,15):
+    for page_num in range(1,14):
         # 对应页码的url 
         new_url = format(url%page_num)
         page_text = requests.get(url=new_url, headers=headers).text
@@ -56,7 +83,97 @@ if __name__ == &quot;__main__&quot;:
             with open(img_path,&#39;wb&#39;) as fp:
                 fp.write(img_data)
                 print(img_name,&#39;下载成功！！！&#39;)
-</code></pre>]]></content>
+</code></pre><h1 id="bs4进行数据解析"><a href="#bs4进行数据解析" class="headerlink" title="bs4进行数据解析"></a>bs4进行数据解析</h1><ul>
+<li>数据解析的原理：<ul>
+<li>1.标签定位</li>
+<li>2.提取标签、标签属性中存储的数据值</li>
+</ul>
+</li>
+<li>bs4数据解析的原理：<ul>
+<li>1.实例化一个BeautifulSoup对象，并且将页面源码数据加载到该对象中</li>
+<li>2.通过调用BeautifulSoup对象中相关的属性或者方法进行标签定位和数据提取</li>
+</ul>
+</li>
+<li>环境安装：<ul>
+<li>pip install bs4</li>
+<li>pip install lxml</li>
+</ul>
+</li>
+<li>如何实例化BeautifulSoup对象：<ul>
+<li>from bs4 import BeautifulSoup</li>
+<li>对象的实例化：<ul>
+<li>1.将本地的html文档中的数据加载到该对象中<pre><code>  fp = open(&#39;./test.html&#39;,&#39;r&#39;,encoding=&#39;utf-8&#39;)
+  soup = BeautifulSoup(fp,&#39;lxml&#39;)
+</code></pre></li>
+<li>2.将互联网上获取的页面源码加载到该对象中<pre><code>  page_text = response.text
+  soup = BeatifulSoup(page_text,&#39;lxml&#39;)
+</code></pre></li>
+</ul>
+</li>
+<li>提供的用于数据解析的方法和属性：<ul>
+<li>soup.tagName:返回的是文档中第一次出现的tagName对应的标签</li>
+<li>soup.find():<ul>
+<li>find(‘tagName’):等同于soup.div</li>
+<li>属性定位：<br>  -soup.find(‘div’,class_/id/attr=’song’)</li>
+</ul>
+</li>
+<li>soup.find_all(‘tagName’):返回符合要求的所有标签（列表）</li>
+</ul>
+</li>
+<li>select：<ul>
+<li>select(‘某种选择器（id，class，标签…选择器）’),返回的是一个列表。</li>
+<li>层级选择器：<ul>
+<li>soup.select(‘.tang &gt; ul &gt; li &gt; a’)：&gt;表示的是一个层级</li>
+<li>oup.select(‘.tang &gt; ul a’)：空格表示的多个层级</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取标签之间的文本数据：<ul>
+<li>soup.a.text/string/get_text()</li>
+<li>text/get_text():可以获取某一个标签中所有的文本内容</li>
+<li>string：只可以获取该标签下面直系的文本内容</li>
+</ul>
+</li>
+<li>获取标签中属性值：<ul>
+<li>soup.a[‘href’]</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="xpath解析"><a href="#xpath解析" class="headerlink" title="xpath解析"></a>xpath解析</h1><p>最常用且最便捷高效的一种解析方式。通用性。</p>
+<ul>
+<li>xpath解析原理：<ul>
+<li>1.实例化一个etree的对象，且需要将被解析的页面源码数据加载到该对象中。</li>
+<li>2.调用etree对象中的xpath方法结合着xpath表达式实现标签的定位和内容的捕获。</li>
+</ul>
+</li>
+<li>环境的安装：<ul>
+<li>pip install lxml</li>
+</ul>
+</li>
+<li>如何实例化一个etree对象:from lxml import etree<ul>
+<li>1.将本地的html文档中的源码数据加载到etree对象中：<br>  etree.parse(filePath)</li>
+<li>2.可以将从互联网上获取的源码数据加载到该对象中<br>  etree.HTML(‘page_text’)</li>
+<li>xpath(‘xpath表达式’)</li>
+</ul>
+</li>
+<li>xpath表达式:<ul>
+<li>/:表示的是从根节点开始定位。表示的是一个层级。</li>
+<li>//:表示的是多个层级。可以表示从任意位置开始定位。</li>
+<li>属性定位：//div[@class=’song’] tag[@attrName=”attrValue”]</li>
+<li>索引定位：//div[@class=”song”]/p[3] 索引是从1开始的。</li>
+<li>取文本：<ul>
+<li>/text() 获取的是标签中直系的文本内容</li>
+<li>//text() 标签中非直系的文本内容（所有的文本内容）</li>
+</ul>
+</li>
+<li>取属性：<br>  /@attrName     ==&gt;img/src</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
